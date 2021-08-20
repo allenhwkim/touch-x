@@ -1,5 +1,4 @@
-# compiled output
-/dist
-
-# dependencies
-/node_modules
+dist
+node_modules
+*.log
+coverage

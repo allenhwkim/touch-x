@@ -5,14 +5,16 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elements-x/touch-x.git"
+    "url": "https://github.com/elements-x/touch-x.git"
   },
   "scripts": {
+    "prepublishOnly": "npm run build",
     "build": "rm -rf dist && npm run build:lib && npm run build:docs",
-    "build:lib": "webpack --config src/webpack.config.js --mode=production",
+    "build:lib": "webpack --config webpack.config.js --mode=production",
     "build:docs": "webpack --config docs-src/webpack.config.js --mode=production",
     "start": "webpack serve --config docs-src/webpack.config.js --mode=development --open",
     "stop": "kill-port 8080",
+    "test": "jest --coverage=true",
     "eslint": "eslint src lib --fix && git add"
   },
   "publishConfig": {
@@ -51,6 +53,7 @@
     "elements-x": "^1.13.4",
     "html-webpack-plugin": "^5.3.2",
     "http-server": "^13.0.0",
+    "jest": "^27.0.6",
     "kill-port": "^1.6.1",
     "terser-webpack-plugin": "^5.1.4",
     "webpack": "^5.50.0",
