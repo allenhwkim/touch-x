@@ -1,13 +1,20 @@
 // use `$` instead of `document.querySelector`
 window.$ = document.querySelector.bind(document);
-
-// enable/disable outline for click and tab
-document.body.addEventListener('click', 
-  e => document.body.classList.remove('a11y-outline') );
-document.body.addEventListener('keydown', 
-  e => (e.key === 'Tab') && document.body.classList.add('a11y-outline') );
-
 window.addEventListener('DOMContentLoaded', function() {
+  // enable/disable outline for click and tab
+  document.body.addEventListener('click', 
+  e => document.body.classList.remove('a11y-outline') );
+  document.body.addEventListener('keydown', 
+  e => (e.key === 'Tab') && document.body.classList.add('a11y-outline') );
+  $('#dark-mode-switch').addEventListener('click', event => {
+    const theme = $('#dark-mode-switch').getAttribute('aria-checked') === 'true' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  });
+  
+  const theme = localStorage.getItem('theme');
+  document.documentElement.setAttribute('data-theme', theme);
+  $('#dark-mode-switch').setAttribute('status', theme === 'dark' ? 'on' : 'off');
 });
 
 // Single Page Apps for GitHub Pages
@@ -27,9 +34,7 @@ window.addEventListener('DOMContentLoaded', function() {
     var decoded = l.search.slice(1).split('&').map(function(s) { 
       return s.replace(/~and~/g, '&')
     }).join('?');
-    window.history.replaceState(null, null,
-        l.pathname.slice(0, -1) + decoded + l.hash
-    );
+    window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
   }
 }(window.location))
  

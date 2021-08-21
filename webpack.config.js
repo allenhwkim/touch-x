@@ -1,4 +1,7 @@
 const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
+const {name, description, version, author, license, homepage} = require('./package.json');
+const year = new Date().getFullYear();
 
 module.exports = {
   entry: './src/index.js',
@@ -32,5 +35,10 @@ module.exports = {
         type: 'asset/source'
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.BannerPlugin({
+      banner: `touch-x v${version} | ${description} | ${license}(c) ${year} ${author} | ${homepage}`,
+    })
+  ]
 };

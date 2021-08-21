@@ -39,7 +39,7 @@ module.exports = {
       patterns: [
         { from: './docs-src/assets', to: 'assets' },
         { from: './docs-src/pages', to: 'pages' },
-        { from: './docs-src/!(index).html', to: '[name][ext]' }
+        { from: './docs-src/!(index).html', to: '[name][ext]' },
         { from: './docs-src/*.txt', to: '[name][ext]' }
       ]
     })
