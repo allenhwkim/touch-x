@@ -1,8 +1,19 @@
+@import './normalize.css';
+@import './github-markdown.css';
+@import './fontawesome/css/all.min.css';
+
 html {
   --text-color: #0a244d;
   --background-color: #FFF;
   --link-color: #f8b739;
-  --box-shadow: 1px 1px 3px rgb(0 0 0 / 10%)
+  --box-shadow: 1px 1px 3px rgb(0 0 0 / 10%);
+  font-size: 12px;
+}
+body { 
+  font-size: 16px;
+  font-family: -apple-system, sans-serif; 
+  color: var(--text-color); 
+  background-color: var(--background-color);
 }
 
 html[data-theme='dark'] {
@@ -13,7 +24,6 @@ html[data-theme='dark'] {
 }
 
 * {box-sizing: border-box;}
-body { font-family: -apple-system, sans-serif; color: var(--text-color); background-color: var(--background-color);}
 .wrapper {display: flex; align-items: stretch;}
 .list-unstyled { list-style: none; padding: 0;}
 .contents { padding: 12px; }
@@ -22,9 +32,9 @@ a { color: var(--link-color); text-decoration: none; }
 h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 { 
   font-weight: 500; line-height: 1.2; margin: 0;
 }
-h1,.h1 { font-size: 2.5rem }
-h2,.h2 { font-size: 2rem }
-h3,.h3 { font-size: 1.75rem }
+h1,.h1 { font-size: 2.5rem; margin-bottom: 2rem; }
+h2,.h2 { font-size: 2rem; margin-bottom: 1.6rem; }
+h3,.h3 { font-size: 1.75rem; margin-bottom: 1.4rem; }
 
 .m-2 { margin: .5rem!important }
 .mt-2,.my-2 { margin-top: .5rem!important }
@@ -65,6 +75,7 @@ h3,.h3 { font-size: 1.75rem }
 .navbar .dark-mode-switch { 
   font-size: 16px; color: var(--text-color) !important; border-color: var(--text-color) !important; 
 }
+.navbar .dark-mode-switch b { font-weight: normal; }
 .navbar .links { flex: 1; text-align: right;}
 .navbar .links > * { margin-right: 12px; color: var(--text-color)}
 .navbar .links .version { font-size: 20px;}

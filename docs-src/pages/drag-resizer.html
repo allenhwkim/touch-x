@@ -1,0 +1,39 @@
+<style>
+.container {display: flex; align-items: stretch; height: 120px;}
+.container > * { border: 1px solid #CCC; text-align: center; height: 100%;}
+.container > .a {width: 30%}
+.container > .b {width: 30%}
+.container > .c {width: 30%; flex: 1;}
+x-resizer { background: #CCC;}
+x-resizer.active, x-resizer:hover { background: #00F;}
+x-resizer[width] {display: block; cursor:col-resize ; min-width: 4px; max-width: 4px;}
+x-resizer[height] {display: block; cursor: row-resize; min-height: 6px; max-height: 6px;}
+</style>
+
+<h2 class="header">Drag Resizer</h2>
+
+<div class="area">
+  <div class="container">
+    <div class="a">A1</div>
+    <x-resizer width></x-resizer>
+    <div class="b">B1</div>
+    <x-resizer width></x-resizer>
+    <div class="c">C1</div>
+  </div>
+  <x-resizer height> </x-resizer>
+  <div class="container">
+    <div class="a">A2</div>
+    <x-resizer width></x-resizer>
+    <div class="b">B2</div>
+    <x-resizer width></x-resizer>
+    <div class="c">C2</div>
+  </div>
+  <x-resizer height></x-resizer>
+  <div class="container">
+    <div class="a">A3</div>
+    <x-resizer width></x-resizer>
+    <div class="b">B3</div>
+    <x-resizer width></x-resizer>
+    <div class="c">C3</div>
+  </div>
+</div>

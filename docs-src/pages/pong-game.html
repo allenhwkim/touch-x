@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="assets/x-pong-game.css" />
+<link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css' />
+
+<h2 class="header">Pong Game</h2>
+
+<x-pong-game class="game-zone mx-4">
+  <div class="table" id="table">
+    <svg>
+      <rect id="computer" width="80" height="10" y="0" fill="#FFF" />
+      <circle id="ball" lass="ball" cx="40" cy="20" r="10" fill="yellow"/>
+      <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#CCC"
+          stroke-dasharray="8" />
+      <rect id="player" width="80" height="10" fill="#FFF" />
+    </svg>
+  </div>
+  <div class="touch-area" id="touch-area">
+    <div class="score">
+      Computer <span class="computer">0</span> 
+      :<span class="player">0</span> Player
+    </div>
+  </div>
+  <div class="dialog" id="dialog">
+    <div id="message" class="message">Start Game?</div>
+    Difficulty: 
+    <input id="computer-speed" type="number" min="1" max="10" value="5" />
+    <div>
+      <button id="exit-button">Exit</button>
+      <button id="start-button">Start</button>
+    </div>
+  </div>
+</x-pong-game>
+
+<div class="mx-4" style="display: inline-block; vertical-align: top;">
+  TODO: About this game
+</div>

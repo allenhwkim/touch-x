@@ -5,7 +5,6 @@ export class TouchX {
   constructor(el) {
     TouchX.els = TouchX.els || [];
     TouchX.els.push(el);
-    el.addEventListener('contextmenu', e => e.preventDefault());
     
     // this happens on global document level. Thus, single pattern!
     // Should happen once though new TouchX() multiple times
@@ -22,7 +21,6 @@ export class TouchX {
     this.touchStaListener = this._setTouchSta.bind(this);
     this.touchEndListener = this._setTouchEnd.bind(this);
     this.touchMoveListener = this._setTouchMove.bind(this);
-    this.keyboardListener = this._keyboardListener.bind(this);
 
     this.isTouchDevice =  (('ontouchstart' in window) ||
       (navigator.maxTouchPoints > 0) ||
@@ -31,11 +29,10 @@ export class TouchX {
       {start: 'touchstart', move: 'touchmove', end: 'touchend'} :
       {start: 'mousedown', move: 'mousemove', end: 'mouseup'};
 
-    document.body.addEventListener(this.events.start, this.touchStaListener);
-    document.body.addEventListener(this.events.move, this.touchMoveListener);
-    document.body.addEventListener(this.events.end, this.touchEndListener);
-    document.body.addEventListener('mouseleave', _ => this.cancel());
-    document.body.addEventListener('keydown', this.keyboardListener);
+    document.body.addEventListener(this.events.start, this.touchStaListener, false);
+    document.addEventListener(this.events.move, this.touchMoveListener, false);
+    document.addEventListener(this.events.end, this.touchEndListener);
+    document.addEventListener('mouseleave', _ => this.touchStaAt = 0);
   }
 
   _fireEvent(detail) {
@@ -100,16 +97,6 @@ export class TouchX {
     this.reset();
   }
 
-  _keyboardListener(e) {
-    (e.key === 'Escape') && this.cancel(e);
-  }
-
-  cancel(e) {
-    const matrix = this._getMatrix(0, 0, 0, 0);
-    this.reset();
-    this._fireEvent({type: 'cancel', ...matrix});
-  }
-
   _getDirection(x1, y1, x2, y2) {
     const xMove = x1 === x2 ? '': x1 > x2 ? 'LEFT' : 'RIGHT';
     const yMove = y1 === y2 ? '': y1 > y2 ? 'UP' : 'DOWN';
@@ -143,3 +130,5 @@ export class TouchX {
     this.touchStaEl = undefined;
   }
 }
+
+window.TouchX = TouchX;

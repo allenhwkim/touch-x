@@ -7,19 +7,27 @@
     <title>Drag&#x2F;Swipe Library For Mobile&#x2F;Desktop Devices</title>
     <meta name="description" content="Drag&#x2F;Swipe Library For Mobile&#x2F;Desktop Devices" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <script src="//unpkg.com/elements-x"></script> <!-- this can be removed for webpack import 'elements-x' in index.js -->
-
-    <link rel="stylesheet" href="assets/normalize.css" />
     <link rel="stylesheet" href="assets/style.css" />
   </head>
   <body>
     <div class="wrapper">
-      <x-sidebar id="sidebar" class="sidebar contents">
+      <aside id="sidebar" class="sidebar contents">
         <h1><a href="/" class="logo">touch-x</a></h1>
         <x-route target="main-contents">
           <ul class="list-unstyled">
             <li class="active"> <a href="/" src="pages/home.html">Home</a> </li>
+            <li> <a href="properties" src="pages/event-property.html">Event/Properties</a> </li>
+            <li> <a href="drag-resizer" src="pages/drag-resizer.html">Drag Resizer</a> </li>
+            <li> <a href="pong-game" src="pages/pong-game.html">Pong Game</a> </li>
+            <li> <a href="slides" src="pages/slides.html">Slides</a> </li>
+            <li> <a href="draggable" src="pages/draggable.html">Draggable</a> </li>
+            <li> <a href="sortable" src="pages/sortable.html">Sortable</a> </li>
+            <li> <a href="drawer" src="pages/drawer.html">Drawer(Sidebar)</a> </li>
+            <li> 
+              <a href="lines-intersection" src="pages/lines-intersection.html">
+                Intersection of Two Lines
+              </a>
+             </li>
             <li> <a href="about" src="pages/about.html"> About</a> </li>
             <li> <a href="contact" src="pages/contact.html">Contact</a> </li>
           </ul>
@@ -29,7 +37,7 @@
           This template is made with <i class="fas fa-heart"></i> by
           <a href="//elements-x.com" target="_blank">elements-x</a>
         </div>
-      </x-sidebar>
+      </aside>
 
       <div class="main">
         <div class="navbar">

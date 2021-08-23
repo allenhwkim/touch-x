@@ -13,3 +13,7 @@
  * 
  */
 import 'elements-x';
+import '../src'; // enables window.TouchX class
+
+import './assets/x-resizer';
+import './assets/x-pong-game';
