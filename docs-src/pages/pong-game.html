@@ -3,7 +3,7 @@
 
 <h2 class="header">Pong Game</h2>
 
-<x-pong-game class="game-zone mx-4">
+<div class="game-zone">
   <div class="table" id="table">
     <svg>
       <rect id="computer" width="80" height="10" y="0" fill="#FFF" />
@@ -28,8 +28,172 @@
       <button id="start-button">Start</button>
     </div>
   </div>
-</x-pong-game>
+</div>
 
 <div class="mx-4" style="display: inline-block; vertical-align: top;">
   TODO: About this game
 </div>
+
+<script>
+  const table = document.querySelector('#table');
+  const ball = document.querySelector('#table #ball');
+  const player = document.querySelector('#player');
+  const computer = document.querySelector('#computer');
+  const touchArea = document.querySelector('#touch-area');
+  const dialog = document.querySelector('#dialog');
+  const ballRadius = parseInt(ball.getAttribute('r'));
+  const ballSpeed = 4; // starting ball speed, real speed is directionX(Y)
+
+  // computer moving distance by each frame. 
+  // the more, the better defender. it can be set by dialog.
+  let computerSpeed = 5;
+  // real ball speed. this increases every 10 seconds
+  let [directionX, directionY] = [ballSpeed, ballSpeed];
+
+  let [computerScore, playerScore] = [0, 0];
+  let [computerHit, playerHit] = [false, false];
+  let startTimestamp; // used to increase ball speed
+  let touchStart = 0; // used to calculate player moving distance
+
+  // call by requestAnimationFrame(moveBall).
+  // . moves ball by directionX(Y)
+  // . increase ball speed every 10 seconds
+  // . when ball hits barrier it bounces off
+  // . when ball is out of table, mark score
+  // . when ball moves, computer also moves
+  function moveBall(timestamp) {
+    const cx = parseInt(ball.getAttribute('cx'));
+    const cy = parseInt(ball.getAttribute('cy'));
+    const speedIncrease = Math.floor((timestamp - startTimestamp) / 10000);
+    if (speedIncrease) {
+      startTimestamp = timestamp;
+      directionX += directionX > 0 ? 1 : -1;
+      directionY += directionY > 0 ? 1 : -1;
+    }
+
+    const leftLimit = ballRadius;
+    const rightLimit = table.offsetWidth - ballRadius;
+
+    const [nextCX, nextCY] = [cx + directionX, cy + directionY];
+    if (nextCX < leftLimit || nextCX > rightLimit) {
+      directionX = -directionX;
+    }
+    if (playerHit && detectCollision(ball, computer)) {
+      directionY = -directionY;
+      [computerHit, playerHit] = [true, false];
+    }
+    else if (computerHit && detectCollision(ball, player)) {
+      directionY = -directionY;
+      [computerHit, playerHit] = [false, true];
+    }
+
+    const [xPos, yPos] = [cx + directionX, cy + directionY];
+    if (yPos < 0) { // computer lost
+      playerScore++;
+      touchArea.querySelector('.score .player').innerText = playerScore;
+      serveBall();
+    } else if (yPos > table.offsetHeight) { // plaer lost
+      computerScore++;
+      touchArea.querySelector('.score .computer').innerText = computerScore;
+      serveBall();
+    } else {
+      ball.setAttribute('cx', xPos);
+      ball.setAttribute('cy', yPos);
+      if (playerHit) {
+        const computerPos = parseInt(computer.getAttribute('x'));
+        const computerMove = xPos > computerPos ? computerSpeed : -computerSpeed;
+        computer.setAttribute('x', computerPos + computerMove);
+      }
+      requestAnimationFrame(moveBall);
+    }
+  }
+
+  // returns if ball and paddle collides or not
+  function detectCollision(ball, paddle) {
+    const cx = parseInt(ball.getAttribute('cx'));
+    const cy = parseInt(ball.getAttribute('cy'));
+    const r = parseInt(ball.getAttribute('r'));
+    const [x1, y1, w1, h1] = [cx - r, cy - r, r * 2, r * 2];
+
+    const x2 = parseInt(paddle.getAttribute('x'));
+    const y2 = parseInt(paddle.getAttribute('y'));
+    const w2 = parseInt(paddle.getAttribute('width'));
+    const h2 = parseInt(paddle.getAttribute('height'));
+
+    const colliding = x1 < (x2 + w2) && (x1 + w1) > x2 &&
+      y1 < (y2 + h2) && (y1 + h1) > y2;
+    return colliding;
+  }
+
+  // show a dialog with message to (re)start the game
+  function confirmDialog(message) {
+    const startButton = dialog.querySelector('#start-button');
+    const startText = computerScore + playerScore === 0 ? 'Start' : 'Restart';
+    startButton.innerText = startText;
+    dialog.querySelector('#message').innerText = message;
+    dialog.style.display = 'block';
+  }
+
+  // moves player
+  function movePaddle(event) {
+    const { x0, x2, type } = event.detail;
+    if (type === 'start') {
+      touchStart = parseInt(player.getAttribute('x'));
+    }
+    else if (type === 'move') {
+      let x = touchStart + (x2 - x0);
+      x = x < 0 ? 0 : x;
+      x = x > table.offsetWidth - 80 ? table.offsetWidth - 80 : x;
+      player.setAttribute('x', x);
+    }
+  }
+
+  // starts the game
+  function serveBall() {
+    if (playerScore >= 7 || computerScore >= 7) {
+      const msg = playerScore >= 7 ? 'You Win !!!' : 'Computer Win :(';
+      if (!confirmDialog(msg))
+        return;
+    }
+    const rand = ballRadius +
+      Math.floor((table.offsetWidth - ballRadius) * Math.random());
+    computer.setAttribute('x', rand - 40);
+    ball.setAttribute('cy', ballRadius + 10);
+    ball.setAttribute('cx', rand);
+    computerHit = true;
+    startTimestamp = performance.now();
+    [directionX, directionY] = [ballSpeed, ballSpeed];
+    setTimeout(moveBall, 3000);
+  }
+
+  // when window resizes, player also needs to be repositioned
+  function winResizeListener(event) {
+    player.setAttribute('y', table.offsetHeight - ballRadius);
+  }
+
+  // dialog input and button event listeners
+  dialog.querySelector('#computer-speed').addEventListener('change', e => {
+    computerSpeed = parseInt(e.target.value);
+  });
+  dialog.querySelector('#exit-button').addEventListener('click', e => {
+    dialog.style.display = 'none';
+  });
+  dialog.querySelector('#start-button').addEventListener('click', e => {
+    [computerScore, playerScore] = [0, 0];
+    touchArea.querySelector('.score .player').innerText = 0;
+    touchArea.querySelector('.score .computer').innerText = 0;
+    dialog.style.display = 'none';
+    serveBall();
+  });
+
+  setTimeout(_ => {
+    player.setAttribute('x', 50);
+    player.setAttribute('y', table.offsetHeight - ballRadius);
+    new TouchX(touchArea);
+  }, 200);
+
+  document.body.removeEventListener('x-swipe', movePaddle);
+  window.removeEventListener('resize', winResizeListener);
+  document.body.addEventListener('x-swipe', movePaddle);
+  window.addEventListener('resize', winResizeListener);
+</script>

@@ -50,7 +50,7 @@ export class TouchX {
       [this.touchStaX, this.touchStaY] = [clientX, clientY];
       [this.touchStaAt, this.touchStaEl] = [new Date().getTime(), e.target];
 
-      this._fireEvent({type:'start', x1: clientX, y1: clientY, touchStaEl: this.touchStaEl});
+      this._fireEvent({type:'start', x1: clientX, y1: clientY, touchStaEl: this.touchStaElm, orgEvent: e});
     } else {
       this.reset();
     }
@@ -71,10 +71,10 @@ export class TouchX {
         [this.prevEndX, this.prevEndY,  new Date().getTime()];
       const [x1,y1] = [this.touchStaX, this.touchStaY];
       const matrix = this._getMatrix(x1, y1, x2, y2);
-      this._fireEvent({type:'move', ...matrix});
+      this._fireEvent({type:'move', orgEvent: e, ...matrix});
     } else {
       const matrix = this._getMatrix(x1, y1, x2, y2);
-      this._fireEvent({type:'move', ...matrix});
+      this._fireEvent({type:'move', orgEvent: e, ...matrix});
     }
     (xMove && yMove) && (this.prevMove = direction);
     [this.prevEndX, this.prevEndY] = [x2, y2];
@@ -92,7 +92,7 @@ export class TouchX {
 
     const {xMove, yMove} = this._getDirection(x1, y1, x2, y2);
     const direction = matrix.distanceX > matrix.distanceY ? xMove: yMove;
-    this._fireEvent({type: 'end', direction, ...matrix});
+    this._fireEvent({type: 'end', direction, orgEvent: e, ...matrix});
     
     this.reset();
   }

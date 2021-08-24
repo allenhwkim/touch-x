@@ -1,0 +1,48 @@
+x-drawer:not([desktop]) { /* blocker and content */
+  position: fixed;
+  z-index: 99999; /* to be on top of other elements */
+  background: var(--background-color, #FFF);
+  color: var(--text-color, #333);
+  user-select: text;
+}
+x-drawer:not([desktop]).x-visible {
+  display: initial;
+  box-shadow: var(--box-shadow, 0 0 8px #333);
+  opacity: 1;
+}
+x-drawer:not([desktop])[left] {
+  top: 0; bottom: 0; left: 0; right: auto;
+}
+x-drawer:not([desktop])[right] {
+  top: 0; bottom: 0; left: auto; right: 0;
+}
+x-drawer:not([desktop])[top] {
+  top: 0; bottom: auto; left: 0; right: 0;
+}
+x-drawer:not([desktop])[bottom] {
+  top: auto; bottom: 0; left: 0; right: 0;
+}
+
+x-drawer.x-visible .x-handle {
+  display: none;
+}
+x-drawer:not([desktop]) .x-handle {
+  position: absolute;
+  cursor: grab;
+  background: rgba(1,1,1, 0.0);
+  top: 0; bottom: 0; left: 100%; right: auto;
+}
+x-drawer:not([desktop])[left] .x-handle {
+  top: 0; bottom: 0; left: 100%; right: auto; width: 32px; height: auto;
+}
+x-drawer:not([desktop])[right] .x-handle {
+  top: 0; bottom: 0; left: auto; right: 100%; width: 32px; height: auto;
+}
+x-drawer:not([desktop])[top]  .x-handle {
+  top: 100%; bottom: auto; left: 0; right: 0; width: auto; height: 32px;
+}
+x-drawer:not([desktop])[bottom] .x-handle {
+  top: auto; bottom: 100%; left: 0; right: 0; width: auto; height: 32px;
+}
+
+

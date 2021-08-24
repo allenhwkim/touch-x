@@ -16,4 +16,7 @@ import 'elements-x';
 import '../src'; // enables window.TouchX class
 
 import './assets/x-resizer';
-import './assets/x-pong-game';
+import './assets/x-slides';
+import './assets/x-draggable';
+import './assets/x-sortable';
+import './assets/x-drawer';

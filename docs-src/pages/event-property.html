@@ -1,6 +1,6 @@
 <style>
 .area {
-  background: url(https://www.smileycat.com/wp-content/uploads/2016/05/layout_grid.gif);
+  background: url(assets/layout_grid.png);
   height: 400px; position:relative; max-width: 700px;
 }
 .area .line { 
@@ -17,8 +17,10 @@
 <script>
 window.$ = document.querySelector.bind(document);
 new TouchX($('.area'));
+document.removeEventListener('x-swipe', swipeListener);
+document.addEventListener('x-swipe', swipeListener);
 
-document.addEventListener('x-swipe', event => {
+function swipeListener(event) {
   const {offsetLeft, offsetTop} = $('.area');
   const {type, x0, y0, x1, y1, x2='', y2='', distance, duration, speed=0, direction='',
     touchStaEl, distance0, duration0, speed0, distanceX, distanceY} = event.detail;
@@ -72,7 +74,7 @@ document.addEventListener('x-swipe', event => {
     $('.distance0').innerText = distance0;
     $('.speed0').innerText = speed0.toFixed(2);
   }
-})
+}
 </script>
 
 <div class="area">
