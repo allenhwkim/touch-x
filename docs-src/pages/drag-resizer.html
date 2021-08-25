@@ -12,6 +12,22 @@ x-resizer[height] {display: block; cursor: row-resize; min-height: 6px; max-heig
 
 <h2 class="header">Drag Resizer</h2>
 
+<p>
+  The following example is to resize blocks using a drag-resizer.
+  &lt;x-resizer> is a custom element and it registers itself to `new TouchX(this)`.
+</p>
+
+<p>
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/pages/drag-resizer.html">
+    Source Code of this page.
+  </a>
+</p>
+<p>
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/assets/x-resizer.js">
+    source code of custom element, &lt;x-resizer>
+  </a>
+</p>
+
 <div class="area">
   <div class="container">
     <div class="a">A1</div>
@@ -37,3 +53,19 @@ x-resizer[height] {display: block; cursor: row-resize; min-height: 6px; max-heig
     <div class="c">C3</div>
   </div>
 </div>
+
+<x-highlightjs>
+  document.body.addEventListener('x-swipe', swipeListener);
+
+  function swipeListener(event) {
+    const {type, x0, x2} = event.detail;
+    if (type === 'start') {
+      [prevElWidth, nextElWidth] = [prevEl.offsetWidth, nextEl.offsetWidth];
+    }
+    if (type === 'move') {
+      const change = x2 - x0;
+      prevEl.style.width = (Math.max(prevElWidth + change, 20)) + 'px';
+      nextEl.style.width = (Math.max(nextElWidth - change, 20)) + 'px';
+    }
+  }
+</x-highlightjs>

@@ -1,4 +1,10 @@
-<h2 class="header">Intersection point of two lines</h2>
+<h1>Intersection point of two lines</h1>
+
+<p>
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/pages/intersecting-lines.html">
+    Source Code
+  </a><br/>
+</p>
 
 <div class="area">
   <svg width="100%" height="100%">
@@ -24,9 +30,36 @@
 </div>
 <div id="msg">Draw a line to see intersection. Press Cmd(Ctrl) for blue line.</div>
 
+<p>
+  When it moves draw a line between starting point and end point.  <br/>
+  It also draws intersection point and reflection line.
+</p>
+
+<x-highlightjs>
+  document.addEventListener('x-swipe', event => {
+    const bcr =   $('svg').getBoundingClientRect();
+    let {type, x0, y0, x2, y2, orgEvent} = event.detail; //document level position
+    if (type === 'move') {
+      if (orgEvent.metaKey) {
+        const [_x1, _y1, _x2, _y2] = 
+          [x0 - bcr.left, y0 - bcr.top, x2 - bcr.left, y2 - bcr.top];
+        line1 = [_x1, _y1, _x2, _y2];
+        drawLine('#line1', line1);
+      } else {
+        const [_x1, _y1, _x2, _y2] = [x0 - bcr.left, y0 - bcr.top, x2 - bcr.left, y2 - bcr.top];
+        line2 = [_x1, _y1, _x2, _y2];
+        drawLine('#line2', line2);
+      }
+  
+      drawReflection(line1, line2);
+    }
+  }
+</x-highlightjs>
+
 <p style="text-align:center">
    More from <a href="//elements-x.com"> elements-x </a>
 </p>
+
 
 <style>
 .area { background: #CCC; height: calc(100% - 120px); position: relative; height: 400px; }

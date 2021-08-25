@@ -3,35 +3,61 @@
 
 <h2 class="header">Pong Game</h2>
 
-<div class="game-zone">
-  <div class="table" id="table">
-    <svg>
-      <rect id="computer" width="80" height="10" y="0" fill="#FFF" />
-      <circle id="ball" lass="ball" cx="40" cy="20" r="10" fill="yellow"/>
-      <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#CCC"
-          stroke-dasharray="8" />
-      <rect id="player" width="80" height="10" fill="#FFF" />
-    </svg>
-  </div>
-  <div class="touch-area" id="touch-area">
-    <div class="score">
-      Computer <span class="computer">0</span> 
-      :<span class="player">0</span> Player
+<div style="display: flex">
+  <div class="game-zone">
+    <div class="table" id="table">
+      <svg>
+        <rect id="computer" width="80" height="10" y="0" fill="#FFF" />
+        <circle id="ball" lass="ball" cx="40" cy="20" r="10" fill="yellow"/>
+        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#CCC"
+            stroke-dasharray="8" />
+        <rect id="player" width="80" height="10" fill="#FFF" />
+      </svg>
+    </div>
+    <div class="touch-area" id="touch-area">
+      <div class="score">
+        Computer <span class="computer">0</span> 
+        :<span class="player">0</span> Player
+      </div>
+    </div>
+    <div class="dialog" id="dialog">
+      <div id="message" class="message">Start Game?</div>
+      Difficulty: 
+      <input id="computer-speed" type="number" min="1" max="10" value="5" />
+      <div>
+        <button id="exit-button">Exit</button>
+        <button id="start-button">Start</button>
+      </div>
     </div>
   </div>
-  <div class="dialog" id="dialog">
-    <div id="message" class="message">Start Game?</div>
-    Difficulty: 
-    <input id="computer-speed" type="number" min="1" max="10" value="5" />
-    <div>
-      <button id="exit-button">Exit</button>
-      <button id="start-button">Start</button>
-    </div>
-  </div>
-</div>
 
-<div class="mx-4" style="display: inline-block; vertical-align: top;">
-  TODO: About this game
+  <div class="mx-4">
+    You can build a pong game with `touch-x` library. For this game, `touch-x` is used
+    to move player paddle.
+
+    <p>
+      <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/pages/pong-game.html">
+      Source Code
+      </a>
+    </p>
+
+    <x-highlightjs>
+      new TouchX(document.querySelector('.touch-area'));
+      document.body.addEventListener('x-swipe', event => {
+        const { x0, x2, type } = event.detail;
+        if (type === 'start') {
+          touchStart = parseInt(player.getAttribute('x'));
+        }
+        else if (type === 'move') {
+          let x = touchStart + (x2 - x0);
+          x = x &lt; 0 ? 0 : x;
+          x = x &gt; table.offsetWidth - 80 ? 
+            table.offsetWidth - 80 : x;
+          player.setAttribute('x', x);
+        }
+      });
+    </x-highlightjs>
+  </div>
 </div>
 <x-listeners debug></x-listeners>
 

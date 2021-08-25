@@ -47,6 +47,9 @@ h3,.h3 { font-size: 1.75rem; margin-bottom: 1.4rem; }
 .mb-4,.my-4 { margin-bottom: 1.5rem!important }
 .ml-4,.mx-4 { margin-left: 1.5rem!important }
 
+.x-p1 { padding: 1rem!important }
+.x-p2 { padding: 2rem!important }
+
 .sidebar {
   min-width: 300px; max-width: 300px; background: #32373d; color: #fff; min-height: 100vh;
   position: relative; padding: 24px;

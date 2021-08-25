@@ -2,8 +2,11 @@ import { addCss, removeCss } from 'elements-x';
 
 const css = `
   x-sortable { user-select: none; position: relative;}
-  x-sortable li { border-bottom: 2px solid transparent; cursor: grab; }
-  x-sortable.x-active .x-target { border-bottom: 2px solid #AAA; }
+  x-sortable > *, x-sortable li { cursor: grab; position: relative; }
+  x-sortable.x-active .x-target:after { 
+    content: ''; height: 2px; display: block; background: #AAA; 
+    position: absolute; inset: auto 0 -4px 0;
+  }
   x-sortable .x-cloned { position: absolute; pointer-events: none; display: none; }
 `;
 
@@ -27,7 +30,7 @@ export class XSortable extends HTMLElement {
   }
 
   touchSwipeListener(event) {
-    const {x0, y0, x2, y2, distance0, touchStaEl, direction, type, ...matrix} = event.detail;
+    const {type, x2, y2, touchStaEl} = event.detail;
 
     if (type === 'start') {
       touchStaEl.style.opacity = .5;
@@ -43,7 +46,7 @@ export class XSortable extends HTMLElement {
       this.target?.classList.add('x-target');
       this._setClonedElPos(x2, y2);
     } else if (type === 'end') {
-      if (this.target) {
+      if (this.target && this.contains(this.target)) {
         try {
           this.target.insertAdjacentElement('afterend', touchStaEl)
         } catch(e) {}
@@ -59,7 +62,7 @@ export class XSortable extends HTMLElement {
   }
 
   _setClonedElPos(x2, y2) {
-    this.clonedEl.style.top = `${y2 - this.offsetTop}px`;
+    this.clonedEl.style.top = `${y2 - this.offsetTop + window.scrollY }px`;
     this.clonedEl.style.left = `${x2 - this.offsetLeft}px`;
     this.clonedEl.style.display = 'block';
   }

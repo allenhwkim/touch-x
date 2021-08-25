@@ -42,6 +42,7 @@ export class TouchX {
 
   _setTouchSta(e) {
     if (TouchX.els.some(el => el.contains(e.target))) {
+      document.body.style.width = `${document.body.scrollWidth}px`;
       disableBodyScroll(document.body);
 
       const {clientX, clientY} = this.isTouchDevice ? e.changedTouches[0] : e;
@@ -83,6 +84,7 @@ export class TouchX {
   _setTouchEnd(e) {
     if (!this.touchStaEl) return;
     enableBodyScroll(document.body);
+    document.body.style.width = ``;
 
     const {clientX, clientY} = this.isTouchDevice ? e.changedTouches[0] : e;
     [this.touchEndX, this.touchEndY] = [clientX, clientY];

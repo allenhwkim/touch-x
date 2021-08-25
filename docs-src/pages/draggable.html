@@ -27,8 +27,16 @@
   }
 </script>
 
-<h2>Draggable</h2>
+<h1>Draggable</h1>
 
+<p>
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/pages/draggable.html">
+    Source Code of this page.
+  </a><br/>
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/assets/x-draggable.js">
+    Source code of custom element, &lt;x-draggable>
+  </a>
+</p>
 
 <div class="container">
   <x-draggable drop-zone=".odd, .even, x-draggable">
@@ -53,3 +61,19 @@
     </fieldset>
   </div>
 </div>
+
+<p>
+  You can build drag-and-drop using `touch-x` library.
+  On this example, it's using a custom-element `x-draggble` which utilizes this library.
+</p>
+
+<p>
+  &lt;x-draggable> is a custom element, and it registers its children element to `new TouchX(child)`, 
+  so that each child can be draggable.
+</p>
+
+<p>
+  When drag starts, it clones the clicked element.<br/>
+  When drag moves, it moves the cloned element<br/>
+  When drag stops and it's on drop zone, it moves the clicked element
+</p>

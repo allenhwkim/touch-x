@@ -1,3 +1,23 @@
+<h1> Event / Properties</h1>
+
+<p>
+touch-x fires `x-swipe` event when the registered element with `new TouchX(el)` is touched.
+It fires an event with four different types; start, move, end, and cancel. 
+</p>
+
+<x-highlightjs>
+  new TouchX(el);
+  document.addEventListener('x-swipe', event => {
+    const {type, x0, x1, ...detail} = devent.detail;
+  })
+</x-highlightjs>
+
+<p>
+  The following demo draws a line between x1, y1 and x2, y2.
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/pages/event-property.html">
+  Source Code
+  </a>
+</p>
 <div class="area">
   <div class="line">
     <svg width="100%" height="100%">
@@ -27,6 +47,88 @@
     speed0: <b class="speed0">0</b>px/ms
   </pre>
 </div>
+<img src="assets/touch-trace.png" width="600" />
+
+<table>
+  <thead>
+    <tr>
+      <th id="name">name</th>
+      <th id="description">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>type</td>
+      <td><code>x-touch</code> event type. <code>start</code>, <code>move</code>, <code>end</code> or <code>cancel</code></td>
+    </tr>
+    <tr>
+      <td>x0</td>
+      <td>touch start x point.</td>
+    </tr>
+    <tr>
+      <td>y0</td>
+      <td>touch start y point.</td>
+    </tr>
+    <tr>
+      <td>x1</td>
+      <td>re-calculated touch start x point. It's reset when touch direction changes.</td>
+    </tr>
+    <tr>
+      <td>y1</td>
+      <td>re-calculated touch start y point. It's reset when touch direction changes.</td>
+    </tr>
+    <tr>
+      <td>x2</td>
+      <td>current touch x point.</td>
+    </tr>
+    <tr>
+      <td>y2</td>
+      <td>current touch y point.</td>
+    </tr>
+    <tr>
+      <td>distanceX</td>
+      <td>distance between x1 and x2</td>
+    </tr>
+    <tr>
+      <td>distanceY</td>
+      <td>distance between x1 and x2</td>
+    </tr>
+    <tr>
+      <td>distance</td>
+      <td>distance between (x1, y1) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>duration</td>
+      <td>touch duration between two points; (x1, y1) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>speed</td>
+      <td>touch move speed between two points; (x1, y1) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>distance0</td>
+      <td>distance between (x0, y0) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>duration0</td>
+      <td>touch duration between two points; (x0, y0) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>speed0</td>
+      <td>touch move speed between two points; between (x0, y0) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>touchStaEl</td>
+      <td>the element that touch has started from</td>
+    </tr>
+    <tr>
+      <td>orgEvent</td>
+      <td>original event of <code>touchstart</code> or <code>touchmove</code> or <code>touchend</code></td>
+    </tr>
+  </tbody>
+</table>
+
+
 <x-listeners debug></x-listeners> <!-- to remove global listeners when disconnected -->
 
 <style>
@@ -44,6 +146,7 @@
 .area .legend {
   font-size:14px; position:absolute; right:0; text-align:right; padding: 60px 12px;
 }
+tr *:first-child { font-weight: bold; text-align: left;}
 </style>
 
 <script>
@@ -95,9 +198,9 @@ function swipeListener(event) {
     $('.speed0').innerText = speed0.toFixed(2);
     $('.staEl').innerText = staEl,
     $('svg #line').setAttribute('x1', (x1 || y2) - offsetLeft);
-    $('svg #line').setAttribute('y1', (y1 || y2) - offsetTop);
+    $('svg #line').setAttribute('y1', (y1 || y2) - offsetTop + window.scrollY);
     $('svg #line').setAttribute('x2', (x2 || x1) - offsetLeft);
-    $('svg #line').setAttribute('y2', (y2 || y1) - offsetTop);
+    $('svg #line').setAttribute('y2', (y2 || y1) - offsetTop + window.scrollY);
     $('svg #line').setAttribute('stroke-width', Math.ceil(speed * 5));
   } else if (type === 'end'){
     $('.direction').innerText = direction;
