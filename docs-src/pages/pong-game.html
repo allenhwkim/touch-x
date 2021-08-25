@@ -33,27 +33,28 @@
 <div class="mx-4" style="display: inline-block; vertical-align: top;">
   TODO: About this game
 </div>
+<x-listeners debug></x-listeners>
 
 <script>
-  const table = document.querySelector('#table');
-  const ball = document.querySelector('#table #ball');
-  const player = document.querySelector('#player');
-  const computer = document.querySelector('#computer');
-  const touchArea = document.querySelector('#touch-area');
-  const dialog = document.querySelector('#dialog');
-  const ballRadius = parseInt(ball.getAttribute('r'));
-  const ballSpeed = 4; // starting ball speed, real speed is directionX(Y)
+  var table = document.querySelector('#table');
+  var ball = document.querySelector('#table #ball');
+  var player = document.querySelector('#player');
+  var computer = document.querySelector('#computer');
+  var touchArea = document.querySelector('#touch-area');
+  var dialog = document.querySelector('#dialog');
+  var ballRadius = parseInt(ball.getAttribute('r'));
+  var ballSpeed = 4; // starting ball speed, real speed is directionX(Y)
 
   // computer moving distance by each frame. 
   // the more, the better defender. it can be set by dialog.
-  let computerSpeed = 5;
+  var computerSpeed = 5;
   // real ball speed. this increases every 10 seconds
-  let [directionX, directionY] = [ballSpeed, ballSpeed];
+  var [directionX, directionY] = [ballSpeed, ballSpeed];
 
-  let [computerScore, playerScore] = [0, 0];
-  let [computerHit, playerHit] = [false, false];
-  let startTimestamp; // used to increase ball speed
-  let touchStart = 0; // used to calculate player moving distance
+  var [computerScore, playerScore] = [0, 0];
+  var [computerHit, playerHit] = [false, false];
+  var startTimestamp; // used to increase ball speed
+  var touchStart = 0; // used to calculate player moving distance
 
   // call by requestAnimationFrame(moveBall).
   // . moves ball by directionX(Y)
@@ -192,8 +193,8 @@
     new TouchX(touchArea);
   }, 200);
 
-  document.body.removeEventListener('x-swipe', movePaddle);
-  window.removeEventListener('resize', winResizeListener);
   document.body.addEventListener('x-swipe', movePaddle);
   window.addEventListener('resize', winResizeListener);
+  $('x-listeners').handleGlobalListener(document.body, 'x-swipe', movePaddle);
+  $('x-listeners').handleGlobalListener(window, 'resize', winResizeListener);
 </script>

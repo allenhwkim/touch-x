@@ -1,3 +1,34 @@
+<div class="area">
+  <div class="line">
+    <svg width="100%" height="100%">
+      <line id="line" x1="0" y1="0" x2="0" y2="0" stroke="red" stroke-width="1" />
+    </svg>
+  </div>
+  <div class="swipe-here">Swipe Here</div>
+  <pre class="legend">
+    event: <b class="event">N/A</b>
+    type: <b class="type">start</b>
+    start: <b class="staEl">0</b>
+
+    x0: <b class="x0">0</b> y0: <b class="y0">0</b>
+    x1: <b class="x1">0</b> y1: <b class="y1">0</b>
+    x2: <b class="x2">0</b> y2: <b class="y2">0</b>
+
+    direction: <b class="direction">N/A</b>
+
+    distance: <b class="distance">0</b>px
+    duration: <b class="duration">0</b>ms
+    speed: <b class="speed">0</b>px/ms
+    distanceX: <b class="distanceX">0</b>px
+    distanceY: <b class="distanceY">0</b>px
+
+    distance0: <b class="distance0">0</b>px
+    duration0: <b class="duration0">0</b>ms
+    speed0: <b class="speed0">0</b>px/ms
+  </pre>
+</div>
+<x-listeners debug></x-listeners> <!-- to remove global listeners when disconnected -->
+
 <style>
 .area {
   background: url(assets/layout_grid.png);
@@ -11,14 +42,17 @@
   transform: translateY(-50%) translateX(-50%); color:#CCC; font-size: 32px; 
 }
 .area .legend {
-  font-size:14px; position:absolute; right:0; text-align:right; padding: 0 12px;
+  font-size:14px; position:absolute; right:0; text-align:right; padding: 60px 12px;
 }
 </style>
+
 <script>
 window.$ = document.querySelector.bind(document);
 new TouchX($('.area'));
-document.removeEventListener('x-swipe', swipeListener);
+
 document.addEventListener('x-swipe', swipeListener);
+// document.removeEventListener('x-swipe', swipeListener);
+$('x-listeners').handleGlobalListener(document, 'x-swipe', swipeListener);
 
 function swipeListener(event) {
   const {offsetLeft, offsetTop} = $('.area');
@@ -76,36 +110,3 @@ function swipeListener(event) {
   }
 }
 </script>
-
-<div class="area">
-  <div class="line">
-    <svg width="100%" height="100%">
-      <line id="line" x1="0" y1="0" x2="0" y2="0" stroke="red" stroke-width="1" />
-    </svg>
-  </div>
-  <div class="swipe-here">Swipe Here</div>
-  <pre class="legend">
-
-
-
-    event: <b class="event">N/A</b>
-    type: <b class="type">start</b>
-    start: <b class="staEl">0</b>
-
-    x0: <b class="x0">0</b> y0: <b class="y0">0</b>
-    x1: <b class="x1">0</b> y1: <b class="y1">0</b>
-    x2: <b class="x2">0</b> y2: <b class="y2">0</b>
-
-    direction: <b class="direction">N/A</b>
-
-    distance: <b class="distance">0</b>px
-    duration: <b class="duration">0</b>ms
-    speed: <b class="speed">0</b>px/ms
-    distanceX: <b class="distanceX">0</b>px
-    distanceY: <b class="distanceY">0</b>px
-
-    distance0: <b class="distance0">0</b>px
-    duration0: <b class="duration0">0</b>ms
-    speed0: <b class="speed0">0</b>px/ms
-  </pre>
-</div>

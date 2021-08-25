@@ -1,14 +1,118 @@
-<div class="markdown-body"><h1 id="touch-x">touch-x</h1>
-<p>Drag/Swipe Library For Mobile/Desktop Devices</p>
-<h2 id="usage-with-webpack-browserify--other-bundlers">Usage with Webpack, Browserify, &amp; Other Bundlers</h2>
-<p>If you want to use it with a bundler, install <code>touch-x</code> with npm:</p>
-<pre><code>$ npm install touch-x --save-dev</code></pre>
-<p>Simply import the module into your bundle:</p>
-<pre><code>import {XTouch} from  'touch-x';</code></pre>
-<h3 id="commands">Commands</h3>
-<pre><code class="bash language-bash"># install dependencies
+<div class="markdown-body">
+  <h1 id="touch-x">touch-x</h1>
+  <p>Drag/Swipe Library For Mobile/Desktop Devices </p>
+  <p>Caveat: <br />
+    This is currently only focused on single touch and swipe(move) actions.<br />
+    double tab, zoom, 3 finger actions are not covered with this library.</p>
+  <h2 id="usage-with-webpack-browserify--other-bundlers">Usage with Webpack, Browserify, &amp; Other Bundlers</h2>
+  <p>If you want to use it with a bundler, install <code>touch-x</code> with npm:</p>
+  <pre><code>$ npm install touch-x --save-dev</code></pre>
+  <p>Simply import the module into your bundle:</p>
+  <pre><code>import {XTouch} from  'touch-x';</code></pre>
+  <h2 id="usage-with-browser">Usage with Browser</h2>
+  <pre><code>&lt;script src="//unpkg.com/touch-x"&gt;&lt;/script&gt;</code></pre>
+  <h2 id="how-to-use">How to use</h2>
+  <p>Initiate a touch action with <code>new TouchX(cssSelector)</code>. <br />
+    This will fire a <code>x-swipe</code> event when the selected area is touched and moves.</p>
+  <pre><code>new TouchX(document.querySelector('.touch-area'));
+document.addEventListener('x-swipe', swipeListener);
+
+function swipeListener(event) {
+  const {type, x0, y0, x1, y1, x2, y2, speed, direction, ...matrix} = event.detail;
+  if (type === 'start') {
+    console.log(event);
+  } else if (type === 'move') {
+    console.log(event);
+  } else if (type === 'end') {
+    console.log(event);
+  } else if (type === 'cancel') {
+    console.log(event);
+  }
+}</code></pre>
+  <h3 id="x-swipe-event-detail"><code>x-swipe</code> event detail</h3>
+  <table>
+    <thead>
+      <tr>
+        <th id="name">name</th>
+        <th id="description">description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>type</td>
+        <td><code>x-touch</code> event type. <code>start</code>, <code>move</code>, <code>end</code> or <code>cancel</code></td>
+      </tr>
+      <tr>
+        <td>x0</td>
+        <td>touch start x point.</td>
+      </tr>
+      <tr>
+        <td>y0</td>
+        <td>touch start y point.</td>
+      </tr>
+      <tr>
+        <td>x1</td>
+        <td>re-calculated touch start x point. It's reset when touch direction changes.</td>
+      </tr>
+      <tr>
+        <td>y1</td>
+        <td>re-calculated touch start y point. It's reset when touch direction changes.</td>
+      </tr>
+      <tr>
+        <td>x2</td>
+        <td>current touch x point.</td>
+      </tr>
+      <tr>
+        <td>y2</td>
+        <td>current touch y point.</td>
+      </tr>
+      <tr>
+        <td>distanceX</td>
+        <td>distance between x1 and x2</td>
+      </tr>
+      <tr>
+        <td>distanceY</td>
+        <td>distance between x1 and x2</td>
+      </tr>
+      <tr>
+        <td>distance</td>
+        <td>distance between (x1, y1) and (x2, y2)</td>
+      </tr>
+      <tr>
+        <td>duration</td>
+        <td>touch duration between two points; (x1, y1) and (x2, y2)</td>
+      </tr>
+      <tr>
+        <td>speed</td>
+        <td>touch move speed between two points; (x1, y1) and (x2, y2)</td>
+      </tr>
+      <tr>
+        <td>distance0</td>
+        <td>distance between (x0, y0) and (x2, y2)</td>
+      </tr>
+      <tr>
+        <td>duration0</td>
+        <td>touch duration between two points; (x0, y0) and (x2, y2)</td>
+      </tr>
+      <tr>
+        <td>speed0</td>
+        <td>touch move speed between two points; between (x0, y0) and (x2, y2)</td>
+      </tr>
+      <tr>
+        <td>touchStaEl</td>
+        <td>the element that touch has started from</td>
+      </tr>
+      <tr>
+        <td>orgEvent</td>
+        <td>original event of <code>touchstart</code> or <code>touchmove</code> or <code>touchend</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2 id="commands-for-maintainers">Commands For Maintainers</h2>
+  <pre><code class="bash language-bash"># install dependencies
 npm install
 # serve with hot reload at localhost:8080
 npm start
 # build for production with minification
-npm run build</code></pre></div>
+npm run build</code></pre>
+</div>

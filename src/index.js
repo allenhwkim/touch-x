@@ -50,7 +50,7 @@ export class TouchX {
       [this.touchStaX, this.touchStaY] = [clientX, clientY];
       [this.touchStaAt, this.touchStaEl] = [new Date().getTime(), e.target];
 
-      this._fireEvent({type:'start', x1: clientX, y1: clientY, touchStaEl: this.touchStaElm, orgEvent: e});
+      this._fireEvent({type:'start', x1: clientX, y1: clientY, touchStaEl: this.touchStaEl, orgEvent: e});
     } else {
       this.reset();
     }

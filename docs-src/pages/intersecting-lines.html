@@ -92,8 +92,9 @@ function getExtendedPoint(startPt, endPt, extent) {
 }
 
 function drawLine(selector, line) {
-  if (!line) return;
   let [x1, y1, x2, y2] = line;
+  if (!x1 || !y1 || !x2 || !y2) return;
+
   $(selector).setAttribute('x1', x1);
   $(selector).setAttribute('y1', y1);
   $(selector).setAttribute('x2', x2);
@@ -127,8 +128,8 @@ function drawReflection(line1, line2) {
   drawLine('#reflection', [iPoint.x, iPoint.y, ePoint.x, ePoint.y]);
 }
 
-let line1 = [100, 100, 400, 300];
-let line2 = [100, 300, 400, 100];
+var line1 = [100, 100, 400, 300];
+var line2 = [100, 300, 400, 100];
 drawLine('#line1', line1);
 drawLine('#line2', line2);
 drawReflection(line1, line2);
