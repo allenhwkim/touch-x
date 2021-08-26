@@ -4,7 +4,7 @@ Drag/Swipe Library For Mobile/Desktop Devices
 
 Caveat: 
 This is currently only focused on single touch and swipe(move) actions.
-double tab, zoom, 3 finger actions are not covered with this library.
+Double tab, zoom, 3 finger actions are not covered with this library.
 
 ## Usage with Webpack, Browserify, & Other Bundlers
 If you want to use it with a bundler, install `touch-x` with npm:

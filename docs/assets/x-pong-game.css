@@ -1,0 +1,67 @@
+.game-zone {
+  display: inline-block;
+  width: 100%;
+  max-width: 375px;
+  /* margin: 0 auto; */
+  height: calc(100vh - 240px);
+  text-align: center;
+  border: 1px solid #333;
+  background: #eee;
+  position: relative;
+  font-family: orbitron, monospace;
+}
+
+.game-zone .table {
+  height: calc(100% - 50px);
+  position: relative;
+}
+.game-zone .table svg {
+  position:absolute;
+  background: #666;
+  inset: 0 0 0 0;
+  z-index:1;
+  width: 100%;
+  height: 100%;
+}
+.game-zone .touch-area {
+  color: #999;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 50%;
+  width: 100%;
+  user-select: none;
+  position: absolute;
+  border: 1px none #333;
+  z-index: 1;
+}
+.game-zone .touch-area .score {
+  position: absolute;
+  inset: auto 0 12px 0;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+.game-zone .touch-area .score span {
+  color: #333;
+  width: 20px;
+  display: inline-block;
+  text-align: right;
+}
+.game-zone .dialog {
+  position: absolute;
+  inset: 40% 10% auto 10%;
+  background: #FFF;
+  z-index: 2;
+  text-align: center;
+  padding: 8px;
+}
+.game-zone .dialog .message {
+  font-weight: bold;
+  font-size: 18px;
+}
+.game-zone .dialog button, 
+.game-zone .dialog input {
+  font-family: orbitron, monospace;
+  margin-top: 8px;
+  padding: 0 4px;
+}

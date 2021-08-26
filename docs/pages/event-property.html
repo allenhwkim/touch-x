@@ -1,0 +1,215 @@
+<h1> Event / Properties</h1>
+
+<p>
+touch-x fires `x-swipe` event when the registered element with `new TouchX(el)` is touched.
+It fires an event with four different types; start, move, end, and cancel. 
+</p>
+
+<x-highlightjs>
+  new TouchX(el);
+  document.addEventListener('x-swipe', event => {
+    const {type, x0, x1, ...detail} = devent.detail;
+  })
+</x-highlightjs>
+
+<p>
+  The following demo draws a line between x1, y1 and x2, y2.
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/pages/event-property.html">
+  Source Code
+  </a>
+</p>
+<div class="area">
+  <div class="line">
+    <svg width="100%" height="100%">
+      <line id="line" x1="0" y1="0" x2="0" y2="0" stroke="red" stroke-width="1" />
+    </svg>
+  </div>
+  <div class="swipe-here">Swipe Here</div>
+  <pre class="legend">
+    event: <b class="event">N/A</b>
+    type: <b class="type">start</b>
+    start: <b class="staEl">0</b>
+
+    x0: <b class="x0">0</b> y0: <b class="y0">0</b>
+    x1: <b class="x1">0</b> y1: <b class="y1">0</b>
+    x2: <b class="x2">0</b> y2: <b class="y2">0</b>
+
+    direction: <b class="direction">N/A</b>
+
+    distance: <b class="distance">0</b>px
+    duration: <b class="duration">0</b>ms
+    speed: <b class="speed">0</b>px/ms
+    distanceX: <b class="distanceX">0</b>px
+    distanceY: <b class="distanceY">0</b>px
+
+    distance0: <b class="distance0">0</b>px
+    duration0: <b class="duration0">0</b>ms
+    speed0: <b class="speed0">0</b>px/ms
+  </pre>
+</div>
+<img src="assets/touch-trace.png" width="600" />
+
+<table>
+  <thead>
+    <tr>
+      <th id="name">name</th>
+      <th id="description">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>type</td>
+      <td><code>x-touch</code> event type. <code>start</code>, <code>move</code>, <code>end</code> or <code>cancel</code></td>
+    </tr>
+    <tr>
+      <td>x0</td>
+      <td>touch start x point.</td>
+    </tr>
+    <tr>
+      <td>y0</td>
+      <td>touch start y point.</td>
+    </tr>
+    <tr>
+      <td>x1</td>
+      <td>re-calculated touch start x point. It's reset when touch direction changes.</td>
+    </tr>
+    <tr>
+      <td>y1</td>
+      <td>re-calculated touch start y point. It's reset when touch direction changes.</td>
+    </tr>
+    <tr>
+      <td>x2</td>
+      <td>current touch x point.</td>
+    </tr>
+    <tr>
+      <td>y2</td>
+      <td>current touch y point.</td>
+    </tr>
+    <tr>
+      <td>distanceX</td>
+      <td>distance between x1 and x2</td>
+    </tr>
+    <tr>
+      <td>distanceY</td>
+      <td>distance between x1 and x2</td>
+    </tr>
+    <tr>
+      <td>distance</td>
+      <td>distance between (x1, y1) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>duration</td>
+      <td>touch duration between two points; (x1, y1) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>speed</td>
+      <td>touch move speed between two points; (x1, y1) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>distance0</td>
+      <td>distance between (x0, y0) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>duration0</td>
+      <td>touch duration between two points; (x0, y0) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>speed0</td>
+      <td>touch move speed between two points; between (x0, y0) and (x2, y2)</td>
+    </tr>
+    <tr>
+      <td>touchStaEl</td>
+      <td>the element that touch has started from</td>
+    </tr>
+    <tr>
+      <td>orgEvent</td>
+      <td>original event of <code>touchstart</code> or <code>touchmove</code> or <code>touchend</code></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<x-listeners debug></x-listeners> <!-- to remove global listeners when disconnected -->
+
+<style>
+.area {
+  background: url(assets/layout_grid.png);
+  height: 400px; position:relative; max-width: 700px;
+}
+.area .line { 
+  position:absolute; inset: 0 0 0 0; border:  1px solid #CCC; z-index:1; 
+}
+.area .swipe-here {
+  position: absolute; top: 50%; left:50%; 
+  transform: translateY(-50%) translateX(-50%); color:#CCC; font-size: 32px; 
+}
+.area .legend {
+  font-size:14px; position:absolute; right:0; text-align:right; padding: 60px 12px;
+}
+tr *:first-child { font-weight: bold; text-align: left;}
+</style>
+
+<script>
+window.$ = document.querySelector.bind(document);
+new TouchX($('.area'));
+
+document.addEventListener('x-swipe', swipeListener);
+// document.removeEventListener('x-swipe', swipeListener);
+$('x-listeners').handleGlobalListener(document, 'x-swipe', swipeListener);
+
+function swipeListener(event) {
+  const {offsetLeft, offsetTop} = $('.area');
+  const {type, x0, y0, x1, y1, x2='', y2='', distance, duration, speed=0, direction='',
+    touchStaEl, distance0, duration0, speed0, distanceX, distanceY} = event.detail;
+
+  $('.event').innerText = event.type;
+  if (type === 'start'){
+    const staEl = touchStaEl ? touchStaEl.tagName.toLowerCase() : '';
+    $('.staEl').innerText = staEl;
+    $('.x0').innerText = 0;
+    $('.y0').innerText = 0;
+    $('.x1').innerText = x1;
+    $('.y1').innerText = y1;
+    $('.x2').innerText = 0;
+    $('.y2').innerText = 0;
+    $('.direction').innerText = 'N/A';
+    $('.duration').innerText = 0;
+    $('.distance').innerText = 0;
+    $('.speed').innerText = 0;
+    $('.duration0').innerText = 0;
+    $('.distance0').innerText = 0;
+    $('.speed0').innerText = 0;
+  } else if (type === 'move') {
+    const staEl = touchStaEl ? touchStaEl.tagName.toLowerCase() : '';
+    $('.x0').innerText = x0;
+    $('.y0').innerText = y0;
+    $('.x1').innerText = x1;
+    $('.y1').innerText = y1;
+    $('.x2').innerText = x2;
+    $('.y2').innerText = y2;
+    $('.direction').innerText = direction || 'N/A';
+    $('.duration').innerText = duration;
+    $('.distanceX').innerText = distanceX;
+    $('.distanceY').innerText = distanceY;
+    $('.distance').innerText = distance;
+    $('.speed').innerText = speed.toFixed(2);
+    $('.duration0').innerText = duration0;
+    $('.distance0').innerText = distance0;
+    $('.speed0').innerText = speed0.toFixed(2);
+    $('.staEl').innerText = staEl,
+    $('svg #line').setAttribute('x1', (x1 || y2) - offsetLeft);
+    $('svg #line').setAttribute('y1', (y1 || y2) - offsetTop + window.scrollY);
+    $('svg #line').setAttribute('x2', (x2 || x1) - offsetLeft);
+    $('svg #line').setAttribute('y2', (y2 || y1) - offsetTop + window.scrollY);
+    $('svg #line').setAttribute('stroke-width', Math.ceil(speed * 5));
+  } else if (type === 'end'){
+    $('.direction').innerText = direction;
+    $('.distance').innerText = distance;
+    $('.duration').innerText = duration;
+    $('.speed').innerText = speed.toFixed(2);
+    $('.duration0').innerText = duration0;
+    $('.distance0').innerText = distance0;
+    $('.speed0').innerText = speed0.toFixed(2);
+  }
+}
+</script>

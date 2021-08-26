@@ -1,0 +1,79 @@
+<style>
+.container { display: flex; justify-content: space-between; }
+.container > * { flex: 1; padding: 12px; }
+.container > .drop-zone > * {
+  border: 1px inset #ccc; margin-bottom: 12px; height: 80px; text-align: center; 
+} 
+.ball {
+  display: inline-block; cursor: grab; border: 1px solid #ccc; margin: 2px;
+  width: 2em; height: 2em; border-radius: 50%; text-align: center; line-height: 2em;
+  background: radial-gradient(
+    circle at 65% 15%, white 1px, 
+    rgba(0, 255, 255, 0.897) 3%, 
+    rgb(107, 107, 182) 60%, 
+    aqua 100%
+  );
+}
+</style>
+<script>
+  $('x-draggable').onDrop = (detail) => {
+    const {touchStaEl, dropZoneEl} = detail;
+    if (dropZoneEl.parentElement.classList.contains('drop-zone')) {
+      const isZoneOdd = dropZoneEl.classList.contains('odd');
+      const isDragOdd = touchStaEl.innerText % 2;
+      return !(isZoneOdd ^ isDragOdd)
+    }
+    return true;
+  }
+</script>
+
+<h1>Draggable</h1>
+
+<p>
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/pages/draggable.html">
+    Source Code of this page.
+  </a><br/>
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/assets/x-draggable.js">
+    Source code of custom element, &lt;x-draggable>
+  </a>
+</p>
+
+<div class="container">
+  <x-draggable drop-zone=".odd, .even, x-draggable">
+    <div class="ball">1</div>
+    <div class="ball">2</div>
+    <div class="ball">3</div>
+    <div class="ball">4</div>
+    <div class="ball">5</div>
+    <div class="ball">6</div>
+    <div class="ball">7</div>
+    <div class="ball">8</div>
+    <div class="ball">9</div>
+    <div class="ball">10</div>
+  </x-draggable>
+
+  <div class="drop-zone">
+    <fieldset class="odd">
+      <legend>Odd Numbers</legend>
+    </fieldset>
+    <fieldset class="even">
+      <legend>Even Numbers</legend>
+    </fieldset>
+  </div>
+</div>
+
+<p>
+  You can build drag-and-drop using `touch-x` library.
+  On this example, it's using a custom-element `x-draggble` which utilizes this library.
+</p>
+
+<p>
+  &lt;x-draggable> is a custom element, and it registers its children element to `new TouchX(child)`, 
+  so that each child can be draggable.
+</p>
+
+<p>
+  When drag starts, it clones the clicked element.<br/>
+  When drag moves, it moves the cloned element<br/>
+  When drag stops and it's on drop zone, it moves the clicked element
+</p>

@@ -1,0 +1,74 @@
+<h1>Sortable</h1>
+
+<style>
+  x-sortable > ul { list-style: none; padding: 0; width: 240px;}
+  x-sortable > ul > li { background: #EEE; margin-bottom: 4px; padding: 4px; }
+</style>
+
+<p>
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/pages/sortable.html">
+    Source Code of this page.
+  </a><br/>
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/assets/x-sortable.js">
+    Source code of custom element, &lt;x-sortable>
+  </a>
+</p>
+
+<div style="display: flex">
+  <x-sortable class="x-active x-p1">
+    <ul>
+      <li class="x-target">quick</li>
+      <li>over</li>
+      <li>fox</li>
+      <li>the</li>
+      <li>lazy</li>
+      <li>brown</li>
+      <li>The</li>
+      <li>jumps</li>
+      <li>dog</li>
+    </ul>
+  </x-sortable>
+
+  <div class="x-p1">
+    <p>
+      You can build sortable list using `touch-x` library.
+      On this example, it's using a custom-element `x-sortable` which utilizes this library.
+    </p>
+
+    <p>
+      &lt;x-sortable> is a custom element, and it registers its children element to `new TouchX(child)`, 
+      so that each child can be draggable.
+    </p>
+
+    <p>
+      When drag starts, it clones the clicked element.<br/>
+      When drag moves, it moves the cloned element<br/>
+      When drag stops and it's on drop zone, it moves the clicked element
+    </p>
+  </div>
+</div>
+
+<x-highlightjs>
+  document.body.addEventListener('x-swipe', touchSwipeListener);
+
+  function touchSwipeListener(event) {
+    const {type, x2, y2, touchStaEl} = event.detail;
+
+    if (type === 'start') {
+      this.clonedEl = touchStaEl.cloneNode(touchStaEl, true);
+      this.clonedEl.classList.add('x-cloned');
+      this.clonedEl.style.width = `${touchStaEl.offsetWidth}px`;
+      this.appendChild(this.clonedEl);
+    } else if (type === 'move') {
+      this.target = document.elementFromPoint(x2, y2);
+      this._setClonedElPos(x2, y2);
+    } else if (type === 'end') {
+      if (this.target && this.contains(this.target)) {
+        this.target.insertAdjacentElement('afterend', touchStaEl)
+      }
+      this.clonedEl.remove();
+    } else if (type === 'cancel') {
+      this.clonedEl.remove();
+    }
+  }
+</x-highlightjs>

@@ -1,0 +1,191 @@
+<h1>Intersection point of two lines</h1>
+
+<p>
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/pages/intersecting-lines.html">
+    Source Code
+  </a><br/>
+</p>
+
+<div class="area">
+  <svg width="100%" height="100%">
+    <line id="line1" stroke="#00F" stroke-width="1" />
+    <text id="line1-sta" dx="10"></text>
+    <text id="line1-end" dx="10"></text>
+    
+    <line id="line2" stroke="#F00" stroke-width="1" />
+    <text id="line2-sta" dx="10"></text>
+    <text id="line2-end" dx="10"></text>
+
+    <circle id="intersection" r="5"/>
+    <text id="intersection-txt" dx="10"></text>
+    <circle id="pPoint" r="3" fill="grey"/>
+    <text id="pPoint-txt" dx="10"></text>
+    <circle id="extended" r="3" fill="#F00"/>
+    <text id="extended-txt" dx="10"></text>
+
+    <line id="reflection" stroke="#F00" stroke-width="1" stroke-dasharray="4"/>
+    <text id="reflection-sta" dx="10"></text>
+    <text id="reflection-end" dx="10"></text>
+  </svg>
+</div>
+<div id="msg">Draw a line to see intersection. Press Cmd(Ctrl) for blue line.</div>
+
+<p>
+  When it moves draw a line between starting point and end point.  <br/>
+  It also draws intersection point and reflection line.
+</p>
+
+<x-highlightjs>
+  document.addEventListener('x-swipe', event => {
+    const bcr =   $('svg').getBoundingClientRect();
+    let {type, x0, y0, x2, y2, orgEvent} = event.detail; //document level position
+    if (type === 'move') {
+      if (orgEvent.metaKey) {
+        const [_x1, _y1, _x2, _y2] = 
+          [x0 - bcr.left, y0 - bcr.top, x2 - bcr.left, y2 - bcr.top];
+        line1 = [_x1, _y1, _x2, _y2];
+        drawLine('#line1', line1);
+      } else {
+        const [_x1, _y1, _x2, _y2] = [x0 - bcr.left, y0 - bcr.top, x2 - bcr.left, y2 - bcr.top];
+        line2 = [_x1, _y1, _x2, _y2];
+        drawLine('#line2', line2);
+      }
+  
+      drawReflection(line1, line2);
+    }
+  }
+</x-highlightjs>
+
+<p style="text-align:center">
+   More from <a href="//elements-x.com"> elements-x </a>
+</p>
+
+
+<style>
+.area { background: #CCC; height: calc(100% - 120px); position: relative; height: 400px; }
+.area svg { position:absolute; inset: 0 0 0 0; z-index:1; }
+.header { margin: 0; padding: 12px 0; text-align: center; }
+#msg { text-align: center; }
+svg text { font-size: 12px; }
+</style>
+
+<script>
+function intersection(line1, line2) {
+  line1.y1 *= -1; line1.y2 *= -1; // for Webpage coordinates
+  line2.y3 *= -1; line2.y4 *= -1; // for Webpage coordinates
+
+  const [x1, y1, x2, y2] = line1;
+  const [x3, y3, x4, y4] = line2;
+
+  const  [a1, b1, c1] = [y2 - y1, x1 - x2, x2 * y1 - x1 * y2];
+  if ( a1 === 0 && b1 === 0 ) return 'line1 does not have length';
+
+  const [a2, b2, c2] = [y4 - y3, x3 - x4, x4 * y3 - x3 * y4];
+  if ( a2 === 0 && b2 === 0 ) return 'line2 does not have length';
+  
+  const denom = a1 * b2 - a2 * b1;
+  if (denom === 0) return 'lines are parallel';
+
+  const x = (b1 * c2 - b2 * c1) / denom;   // (x,y) is the intersection
+  const y = (a2 * c1 - a1 * c2) / denom;
+
+  // check if two lines are actually crossing w/o extending it
+  function getDist(x1, y1, x2, y2) {
+    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+  }
+  const distLine1 = getDist(x1, y1, x2, y2);
+  const distLine2 = getDist(x3, y3, x4, y4);
+  const distToXY1  = Math.max(getDist(x1, y1, x, y), getDist(x2, y2, x, y)) ;
+  const distToXY2  = Math.max(getDist(x3, y3, x, y), getDist(x4, y4, x, y)) ;
+  if (distToXY1 > distLine1 || distToXY2 > distLine2) 
+    return 'lines does not meet';
+
+  return {x, y};
+}
+
+// https://stackoverflow.com/a/1811636/454252
+function getPerpendicularPoint(iPoint, line1, line2) {
+  const [x1, y1] = [iPoint.x, iPoint.y]; // start point
+  const [x2, y2] = [line1[2], line1[3]]; // baseline end point
+  const [x3, y3] = [line2[2], line2[3]]; // extended line end point
+
+  const k = ((y2-y1) * (x3-x1) - (x2-x1) * (y3-y1)) / ((y2-y1)**2 + (x2-x1)**2);
+  const x4 = x3 - k * (y2-y1);
+  const y4 = y3 + k * (x2-x1);
+  return {x: x4, y: y4};
+}
+
+//http://www.java2s.com/Tutorials/Javascript/Canvas_How_to/Shape/Extend_a_line_before_and_after_original_endpoints.htm
+function getExtendedPoint(startPt, endPt, extent) {
+  var dx = endPt.x - startPt.x;
+  var dy = endPt.y - startPt.y;
+  var x = startPt.x + dx * extent;
+  var y = startPt.y + dy * extent;
+  return {x, y};
+}
+
+function drawLine(selector, line) {
+  let [x1, y1, x2, y2] = line;
+  if (!x1 || !y1 || !x2 || !y2) return;
+
+  $(selector).setAttribute('x1', x1);
+  $(selector).setAttribute('y1', y1);
+  $(selector).setAttribute('x2', x2);
+  $(selector).setAttribute('y2', y2);
+  $(selector + '-sta').setAttribute('x', x1);
+  $(selector + '-sta').setAttribute('y', y1);
+  $(selector + '-end').setAttribute('x', x2);
+  $(selector + '-end').setAttribute('y', y2);
+  $(selector + '-sta').textContent = 
+    `${Math.floor(x1)}, ${Math.floor(y1)}`;
+  $(selector + '-end').textContent = 
+    `${Math.floor(x2)}, ${Math.floor(y2)}`;
+}
+
+function drawPoint(selector, {x, y} = point) {
+  if (!x || !y) return;
+  $(selector + '-txt').setAttribute('x', x);
+  $(selector + '-txt').setAttribute('y', y);
+  $(selector + '-txt').textContent = `${Math.floor(x)}, ${Math.floor(y)}`;;
+  $(selector).setAttribute('cx', x);
+  $(selector).setAttribute('cy', y);
+}
+
+function drawReflection(line1, line2) {
+  const iPoint = intersection(line1, line2);
+  drawPoint('#intersection', iPoint);
+  const pPoint = getPerpendicularPoint(iPoint, line1, line2);
+  drawPoint('#pPoint', pPoint);
+  const ePoint = getExtendedPoint({x:line2[2], y:line2[3]}, pPoint, 2);
+  drawPoint('#extended', ePoint);
+  drawLine('#reflection', [iPoint.x, iPoint.y, ePoint.x, ePoint.y]);
+}
+
+var line1 = [100, 100, 400, 300];
+var line2 = [100, 300, 400, 100];
+drawLine('#line1', line1);
+drawLine('#line2', line2);
+drawReflection(line1, line2);
+
+// let i = 0;
+document.addEventListener('x-swipe', event => {
+  const bcr =   $('svg').getBoundingClientRect();
+  let {type, x0, y0, x2, y2, orgEvent} = event.detail; //document level position
+  if (type === 'move') {
+    if (orgEvent.metaKey) {
+      const [_x1, _y1, _x2, _y2] = 
+        [x0 - bcr.left, y0 - bcr.top, x2 - bcr.left, y2 - bcr.top];
+      line1 = [_x1, _y1, _x2, _y2];
+      drawLine('#line1', line1);
+    } else {
+      const [_x1, _y1, _x2, _y2] = [x0 - bcr.left, y0 - bcr.top, x2 - bcr.left, y2 - bcr.top];
+      line2 = [_x1, _y1, _x2, _y2];
+      drawLine('#line2', line2);
+    }
+
+    drawReflection(line1, line2);
+  }
+});
+
+new TouchX($('.area'));
+</script>
