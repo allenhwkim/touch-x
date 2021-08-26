@@ -33,7 +33,7 @@ module.exports = {
     hints: false,
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    // new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({template: 'docs-src/index.html', chunks: ['main'], filename: 'index.html' }),
     new CopyWebpackPlugin({
       patterns: [

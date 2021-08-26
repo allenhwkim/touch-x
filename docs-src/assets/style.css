@@ -79,7 +79,7 @@ h3,.h3 { font-size: 1.75rem; margin-bottom: 1.4rem; }
   font-size: 16px; color: var(--text-color) !important; border-color: var(--text-color) !important; 
 }
 .navbar .dark-mode-switch b { font-weight: normal; }
-.navbar .links { flex: 1; text-align: right;}
+.navbar .links { flex: 1; display: flex; align-items: center; justify-content: flex-end;}
 .navbar .links > * { margin-right: 12px; color: var(--text-color)}
 .navbar .links .version { font-size: 20px;}
 
