@@ -75,7 +75,7 @@
 }
 
 .markdown-body a {
-  background-color: var(--link-color, initial);
+  background-color: var(--background-color, initial);
 }
 
 .markdown-body a:active,
