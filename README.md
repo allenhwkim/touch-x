@@ -7,17 +7,17 @@ This is currently only focused on single touch and swipe(move) actions.
 Double tab, zoom, 3 finger actions are not covered with this library.
 
 ## Usage with Webpack, Browserify, & Other Bundlers
-If you want to use it with a bundler, install `touch-x` with npm:
+If you want to use it with a bundler, install `@elementsx/touch-x` with npm:
 ```
-$ npm install touch-x --save-dev
+$ npm install @elementsx/touch-x --save-dev
 ```
 Simply import the module into your bundle:
 ```
-import {XTouch} from  'touch-x';
+import {XTouch} from  '@elementsx/touch-x';
 ```
 ## Usage with Browser
 ```
-<script src="//unpkg.com/touch-x"></script>
+<script src="//unpkg.com/@elementsx/touch-x"></script>
 ```
 
 ## How to use
