@@ -24,22 +24,34 @@ import {XTouch} from  'touch-x';
 Initiate a touch action with `new TouchX(cssSelector)`. 
 This will fire a `x-swipe` event when the selected area is touched and moves.
 
+*[Try It](https://stackblitz.com/edit/touch-x)*
+The following code is to draw lines on a screen using this library.
 ```
-new TouchX(document.querySelector('.touch-area'));
-document.addEventListener('x-swipe', swipeListener);
+// HTML
+<div class="area">
+  <svg width="100%" height="100%"></svg>
+</div>
 
-function swipeListener(event) {
-  const {type, x0, y0, x1, y1, x2, y2, speed, direction, ...matrix} = event.detail;
-  if (type === 'start') {
-    console.log(event);
+// Javascript
+new TouchX(document.querySelector('.area'));
+
+let lineEl;
+document.addEventListener('x-swipe', event => {
+  const {type, x1, y1, x2, y2} = event.detail;
+
+  if (type === 'start'){
+    lineEl = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+    lineEl.setAttribute('x1', x1);
+    lineEl.setAttribute('y1', y1);
+    lineEl.setAttribute('stroke', 'red')
+    document.querySelector('svg').appendChild(lineEl);
   } else if (type === 'move') {
-    console.log(event);
-  } else if (type === 'end') {
-    console.log(event);
+    lineEl.setAttribute('x2', x2);
+    lineEl.setAttribute('y2', y2);
   } else if (type === 'cancel') {
-    console.log(event);
+    lineEl.remove();
   }
-}
+});
 ```
 
 ### `x-swipe` event detail
