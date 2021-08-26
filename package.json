@@ -9,7 +9,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "rm -rf dist && npm run build:lib",
+    "build": "rm -rf dist && npm run build:lib && npm run build:docs",
     "build:lib": "webpack --config webpack.config.js --mode=production",
     "build:docs": "webpack --config docs-src/webpack.config.js --mode=production",
     "start": "npm stop && webpack serve --config docs-src/webpack.config.js --mode=development --open",
