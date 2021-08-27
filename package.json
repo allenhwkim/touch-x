@@ -1,5 +1,5 @@
 {
-  "name": "touch-x",
+  "name": "@elementsx/touch-x",
   "version": "0.1.0",
   "description": "Drag/Swipe Library For Mobile/Desktop Devices",
   "main": "dist/index.js",
