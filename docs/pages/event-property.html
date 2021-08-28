@@ -168,8 +168,8 @@ function swipeListener(event) {
     $('.staEl').innerText = staEl;
     $('.x0').innerText = 0;
     $('.y0').innerText = 0;
-    $('.x1').innerText = x1;
-    $('.y1').innerText = y1;
+    $('.x1').innerText = Math.floor(x1);
+    $('.y1').innerText = Math.floor(y1);
     $('.x2').innerText = 0;
     $('.y2').innerText = 0;
     $('.direction').innerText = 'N/A';
@@ -181,16 +181,16 @@ function swipeListener(event) {
     $('.speed0').innerText = 0;
   } else if (type === 'move') {
     const staEl = touchStaEl ? touchStaEl.tagName.toLowerCase() : '';
-    $('.x0').innerText = x0;
-    $('.y0').innerText = y0;
-    $('.x1').innerText = x1;
-    $('.y1').innerText = y1;
-    $('.x2').innerText = x2;
-    $('.y2').innerText = y2;
+    $('.x0').innerText = Math.floor(x0);
+    $('.y0').innerText = Math.floor(y0);
+    $('.x1').innerText = Math.floor(x1);
+    $('.y1').innerText = Math.floor(y1);
+    $('.x2').innerText = Math.floor(x2);
+    $('.y2').innerText = Math.floor(y2);
     $('.direction').innerText = direction || 'N/A';
     $('.duration').innerText = duration;
-    $('.distanceX').innerText = distanceX;
-    $('.distanceY').innerText = distanceY;
+    $('.distanceX').innerText = Math.floor(distanceX);
+    $('.distanceY').innerText = Math.floor(distanceY);
     $('.distance').innerText = distance;
     $('.speed').innerText = speed.toFixed(2);
     $('.duration0').innerText = duration0;

@@ -4,6 +4,10 @@ x-drawer:not([desktop]).x-visible {
 }
 x-drawer[left] { margin: 48px 0; border-radius: 0 12px 12px 0; }
 x-drawer[right] { margin: 48px 0; border-radius: 12px 0 0 12px; }
+@media only screen and (max-width: 699px) {
+  x-drawer[left], x-drawer[right] { width: 160px; }
+  x-drawer input {max-width: 100%; }
+}
 x-drawer[top] { margin: 0 48px; border-radius: 0 0 12px 12px; }
 x-drawer[bottom] { margin: 0 48px; border-radius: 12px 12px 0 0; }
 html x-drawer {
@@ -33,7 +37,7 @@ You can also pull out drawers from each side.
   <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/pages/drawer.html">
     Source Code of this page.
   </a><br/>
-  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/assets/x-drawer.js">
+  <a href="https://github.com/elements-x/touch-x/blob/main/docs-src/assets/x-drawer/index.js">
     Source code of custom element, &lt;x-drawer>
   </a>
 </p>
