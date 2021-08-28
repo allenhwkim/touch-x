@@ -22,6 +22,10 @@ html[data-theme='dark'] {
   --link-color: #fbd283;
   --box-shadow: 1px 1px 3px rgb(255 255 255 / 10%)
 }
+img { max-width: 100%; }
+svg { overflow: auto; }
+
+x-highlightjs > .x-highlight { overflow: auto; font-size: 14px; }
 
 * {box-sizing: border-box;}
 .wrapper {display: flex; align-items: stretch;}
@@ -55,7 +59,7 @@ h3,.h3 { font-size: 1.75rem; margin-bottom: 1.4rem; }
   position: relative; padding: 24px; transition: margin .3s, background-color .3s;
 } 
 .sidebar .logo { color: #FFF; }
-.sidebar.active { margin-left: -300px; background: transparent }
+.sidebar.hidden { margin-left: -300px; background: transparent }
 .sidebar h1 { margin: 0 0 20px; font-size: 40px; font-weight: 700; }
 .sidebar ul li > a { background: 0 0;}
 .sidebar ul li a { 

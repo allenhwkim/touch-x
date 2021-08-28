@@ -1,5 +1,5 @@
 <style>
-.container {display: flex; align-items: stretch; height: 120px;}
+.container {display: flex; align-items: stretch; height: 120px; user-select: none;}
 .container > * { border: 1px solid #CCC; text-align: center; height: 100%;}
 .container > .a {width: 30%}
 .container > .b {width: 30%}
@@ -53,7 +53,7 @@ x-resizer[height] {display: block; cursor: row-resize; min-height: 6px; max-heig
     <div class="c">C3</div>
   </div>
 </div>
-
+<br/>
 <x-highlightjs>
   document.body.addEventListener('x-swipe', swipeListener);
 

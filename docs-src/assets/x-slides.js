@@ -30,7 +30,7 @@ export class XSlides extends HTMLElement {
     Array.from(this.children)
       .forEach( (el,index) => el.setAttribute('index', index));
 
-    this.setSlide(this.currentNo);
+    setTimeout(_ => this.setSlide(this.currentNo), 300); // wait for document idle
     window.addEventListener('resize', _ => this.setSlide(this.currentNo, false));
     document.body.addEventListener('x-swipe', this._touchSwipeListener);
   }
@@ -90,6 +90,7 @@ export class XSlides extends HTMLElement {
     const currentSlide = this.querySelector(`[index="${currentNo}"]`);
     const {prevSlideNum, nextSlideNum} = this._getNumSiblings(currentSlide);
     const aroundNumToBe = Math.floor(this.children.length / 2);
+
     if (nextSlideNum > aroundNumToBe) {
       const moves = nextSlideNum - aroundNumToBe; // 9 - 5 = 4
       for (var i =0 ; i < moves; i++) {
