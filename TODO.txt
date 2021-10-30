@@ -1,0 +1,4 @@
+. convert webpack to bojagi 
+. rename docs-src to src
+. rename src to lib
+

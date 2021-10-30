@@ -38,7 +38,7 @@ module.exports = {
   },
   plugins: [
     new webpack.BannerPlugin({
-      banner: `touch-x v${version} | ${description} | ${license}(c) ${year} ${author} | ${homepage}`,
+      banner: `touch-x v${version}\n${description}\n${license}(c) n${year} ${author}\n${homepage}`,
     })
   ]
 };
