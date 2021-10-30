@@ -1,6 +1,6 @@
 {
   "name": "@elementsx/touch-x",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Drag/Swipe Library For Mobile/Desktop Devices",
   "main": "dist/index.js",
   "repository": {
