@@ -1,4 +1,5 @@
 import { addCss, removeCss } from 'elements-x';
+/* global TouchX */
 
 const css = `
   x-draggable { user-select: none; }
@@ -19,7 +20,7 @@ export class XDraggable extends HTMLElement {
     const selector = this.getAttribute('drop-zone');
     this.dropZones = selector && Array.from(document.querySelectorAll(selector));
 
-    console.log(selector, this.dropZones)
+    console.log(selector, this.dropZones);
     Array.from(this.children).forEach(el => {
       el.classList.add('x-draggable');
       new TouchX(el);
@@ -43,7 +44,7 @@ export class XDraggable extends HTMLElement {
       if (touchStaEl.classList.contains('x-draggable')) {
         this.dragClone = touchStaEl.cloneNode(true);
         this.dragClone.style.position = 'absolute';
-        console.log({x1, y1, w, h})
+        console.log({x1, y1, w, h});
         this.dragClone.style.left = `${x1 - w/2}px`;
         this.dragClone.style.top = `${y1 - h/2}px`;
         this.dragClone.style.width = `${w}px`;

@@ -5,7 +5,7 @@ module.exports = {
   moduleNameMapper: null,
   reporters: ['default'],
   coverageDirectory: './reports/coverage',
-  collectCoverageFrom: ['src/**/*.js'],
+  collectCoverageFrom: ['lib/**/*.js'],
   coverageThreshold: {
     'global': {
       // 'branches': 80,

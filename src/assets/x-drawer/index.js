@@ -1,3 +1,4 @@
+/* global TouchX, WebKitCSSMatrix */
 import {setHTML, addCss, removeCss} from 'elements-x';
 
 import { animate } from '../animate';
@@ -20,7 +21,7 @@ export class XDrawer extends HTMLElement {
   
     this.pos = this.getAttribute('right') !== null ? 'RIGHT':
       this.getAttribute('top') !== null ? 'TOP':
-      this.getAttribute('bottom')  !== null ? 'BOTTOM': 'LEFT';
+        this.getAttribute('bottom')  !== null ? 'BOTTOM': 'LEFT';
 
     this.handle = document.createElement('div');
     this.handle.classList.add('x-handle');
@@ -45,7 +46,7 @@ export class XDrawer extends HTMLElement {
   }
 
   _getShowTransform(trX, trY, tfp) { // tfp: timing functioned progress
-    const [pos, width, height] = [this.pos, this.width, this.height];
+    const [pos, _width, _height] = [this.pos, this.width, this.height];
     const horizontal = ['LEFT', 'RIGHT'].includes(pos);
     const px = horizontal ? trX * (1 - tfp) : trY * (1 - tfp); // 50 -> 0
     return horizontal ? `translateX(${px}px)` :  `translateY(${px}px)`;
@@ -56,12 +57,12 @@ export class XDrawer extends HTMLElement {
     const horizontal = ['LEFT', 'RIGHT'].includes(pos);
     let px = pos === 'LEFT' ? trX + (width + trX) * tfp * -1 : // 0 -> -100
       pos === 'RIGHT' ? trX + (width + trX) * tfp:             // 0 -> 100
-      pos === 'TOP' ? trY + (height + trY) * tfp * -1:         // 0 -> -100
-      pos === 'BOTTOM' ? trY + (height + trY) * tfp: '';       // 0 -> 100
+        pos === 'TOP' ? trY + (height + trY) * tfp * -1:         // 0 -> -100
+          pos === 'BOTTOM' ? trY + (height + trY) * tfp: '';       // 0 -> 100
     px = pos === 'LEFT' ? Math.max(px, width * -1) :
       pos === 'RIGHT' ? Math.min(px, width) :
-      pos === 'TOP' ? Math.max(px, height * -1) :
-      pos === 'BOTTOM' ? Math.min(px, height) : undefined;
+        pos === 'TOP' ? Math.max(px, height * -1) :
+          pos === 'BOTTOM' ? Math.min(px, height) : undefined;
     return horizontal ? `translateX(${px}px)` :  `translateY(${px}px)`;
   }
 
@@ -83,7 +84,7 @@ export class XDrawer extends HTMLElement {
   }
 
   touchSwipeListener(event) {
-    const {x0, y0, x2, y2, distance0, touchStaEl, direction, type, ...matrix} = event.detail;
+    const {x2, y2, distance0, touchStaEl, direction, type, ..._matrix} = event.detail;
     if (touchStaEl !== this.handle) return;
 
     if (type === 'move') {
@@ -121,9 +122,9 @@ export class XDrawer extends HTMLElement {
     this.classList.add('x-visible');
     const transform =
       pos === 'LEFT' ? `translateX(${ Math.min(x2 - w, 0) }px)` :
-      pos === 'RIGHT' ? `translateX(${ Math.max(w - (ww - x2), 0) }px)` :
-      pos === 'TOP' ? `translateY(${ Math.min(y2 - h, 0) }px)` :
-      pos === 'BOTTOM' ? `translateY(${ Math.max(h - (wh - y2), 0) }px)` : '';
+        pos === 'RIGHT' ? `translateX(${ Math.max(w - (ww - x2), 0) }px)` :
+          pos === 'TOP' ? `translateY(${ Math.min(y2 - h, 0) }px)` :
+            pos === 'BOTTOM' ? `translateY(${ Math.max(h - (wh - y2), 0) }px)` : '';
     this.style.transform = transform;
   }
 
@@ -142,7 +143,7 @@ export class XDrawer extends HTMLElement {
       // console.log ({trX, transform})
       this.style.transform = transform;
     }, 250, animate.TIMING_FUNCTIONS.linear)
-    .then(_ =>  this.classList.remove('x-visible'));
+      .then(_ =>  this.classList.remove('x-visible'));
   }
 }
 

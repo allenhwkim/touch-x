@@ -1,3 +1,4 @@
+/* global TouchX */
 import { addCss, removeCss } from 'elements-x';
 
 const css = `
@@ -48,8 +49,8 @@ export class XSortable extends HTMLElement {
     } else if (type === 'end') {
       if (this.target && this.contains(this.target)) {
         try {
-          this.target.insertAdjacentElement('afterend', touchStaEl)
-        } catch(e) {}
+          this.target.insertAdjacentElement('afterend', touchStaEl);
+        } catch(e) {} /* eslint-disable-line no-empty */
       }
       touchStaEl.style.opacity = null;
       this.classList.remove('x-active');

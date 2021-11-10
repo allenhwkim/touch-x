@@ -1,3 +1,4 @@
+/* global require, module, __dirname */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -6,7 +7,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: './docs-src/index.js'
+    main: './src/index.js'
   },
   output: {
     path: path.resolve(__dirname, '..', 'docs'),
@@ -34,13 +35,13 @@ module.exports = {
   },
   plugins: [
     // new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({template: 'docs-src/index.html', chunks: ['main'], filename: 'index.html' }),
+    new HtmlWebpackPlugin({template: 'src/index.html', chunks: ['main'], filename: 'index.html' }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: './docs-src/assets', to: 'assets' },
-        { from: './docs-src/pages', to: 'pages' },
-        { from: './docs-src/!(index).html', to: '[name][ext]' },
-        { from: './docs-src/*.txt', to: '[name][ext]' }
+        { from: './src/assets', to: 'assets' },
+        { from: './src/pages', to: 'pages' },
+        { from: './src/!(index).html', to: '[name][ext]' },
+        { from: './src/*.txt', to: '[name][ext]' }
       ]
     })
   ],

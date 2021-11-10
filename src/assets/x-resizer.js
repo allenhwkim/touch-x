@@ -1,3 +1,4 @@
+/* global TouchX */
 export class XResizer extends HTMLElement {
 
   constructor(...args) {

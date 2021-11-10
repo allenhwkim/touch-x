@@ -1,20 +1,20 @@
 const DRAW_FUNCTIONS = {
-  fadeIn: function(tf, f) { this.style.opacity = tf; },
-  fadeOut: function(tf, f) { this.style.opacity = 1-tf; },
-  slideIn: function(tf, f) { _draw(this, `translateX(${-100+tf*100}%)`, tf); },
-  slideInLeft: function(tf, f) { _draw(this, `translateX(${-100+tf*100}%)`, tf); },
-  slideOutLeft: function(tf, f) { _draw(this, `translateX(${-1*tf*100}%)`, 1-tf); },
-  slideInRight: function(tf, f) { _draw(this, `translateX(${100 - tf*100}%)`, tf); },
-  slideOut: function(tf, f) { _draw(this, `translateX(${1*tf*100}%)`, 1-tf); },
-  slideOutRight: function(tf, f) { _draw(this, `translateX(${1*tf*100}%)`, 1-tf); },
-  slideInDown: function(tf, f) { _draw(this, `translateY(${-100+tf*100}%)`, tf); },
-  slideOutUp: function(tf, f) { _draw(this, `translateY(${-1*tf*100}%)`, 1-tf); },
-  slideInUp: function(tf, f) { _draw(this, `translateY(${100 - tf*100}%)`, tf); },
-  slideOutDown: function(tf, f) { _draw(this, `translateY(${1*tf*100}%)`, 1-tf); },
-  zoomIn: function(tf, f) { _draw(this, `scale(${tf})`, tf); },
-  zoomOut: function(tf, f) { _draw(this, `scale(${1-tf})`, 1-tf); },
-  rotateIn: function(tf, f) { _draw(this, `rotate(${-180 + tf * 180}deg)`, tf); },
-  rotateOut: function(tf, f) { _draw(this, `rotate(${tf * 180 * -1}deg)`, 1-tf); }
+  fadeIn: function(tf, _) { this.style.opacity = tf; },
+  fadeOut: function(tf, _) { this.style.opacity = 1-tf; },
+  slideIn: function(tf, _) { _draw(this, `translateX(${-100+tf*100}%)`, tf); },
+  slideInLeft: function(tf, _) { _draw(this, `translateX(${-100+tf*100}%)`, tf); },
+  slideOutLeft: function(tf, _) { _draw(this, `translateX(${-1*tf*100}%)`, 1-tf); },
+  slideInRight: function(tf, _) { _draw(this, `translateX(${100 - tf*100}%)`, tf); },
+  slideOut: function(tf, _) { _draw(this, `translateX(${1*tf*100}%)`, 1-tf); },
+  slideOutRight: function(tf, _) { _draw(this, `translateX(${1*tf*100}%)`, 1-tf); },
+  slideInDown: function(tf, _) { _draw(this, `translateY(${-100+tf*100}%)`, tf); },
+  slideOutUp: function(tf, _) { _draw(this, `translateY(${-1*tf*100}%)`, 1-tf); },
+  slideInUp: function(tf, _) { _draw(this, `translateY(${100 - tf*100}%)`, tf); },
+  slideOutDown: function(tf, _) { _draw(this, `translateY(${1*tf*100}%)`, 1-tf); },
+  zoomIn: function(tf, _) { _draw(this, `scale(${tf})`, tf); },
+  zoomOut: function(tf, _) { _draw(this, `scale(${1-tf})`, 1-tf); },
+  rotateIn: function(tf, _) { _draw(this, `rotate(${-180 + tf * 180}deg)`, tf); },
+  rotateOut: function(tf, _) { _draw(this, `rotate(${tf * 180 * -1}deg)`, 1-tf); }
 };
 
 function _draw(el, transform, opacity) {
@@ -37,7 +37,7 @@ const TIMING_FUNCTIONS = {
   },
   bounceEaseOut: function(n) {
     function bounce(n) {
-      for (let a = 0, b = 1, result; 1; a += b, b /= 2) {
+      for (let a = 0, b = 1, result; 1; a += b, b /= 2) { /* eslint no-constant-condition: 0 */
         if (n >= (7 - 4 * a) / 11) {
           return -Math.pow((11 - 6 * a - 11 * n) / 4, 2) + Math.pow(b, 2);
         }

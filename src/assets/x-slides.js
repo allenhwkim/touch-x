@@ -1,3 +1,4 @@
+/* global TouchX */
 import { addCss, removeCss } from 'elements-x';
 import { animate } from './animate';
 
@@ -47,9 +48,9 @@ export class XSlides extends HTMLElement {
     const curScrollLeft = this.scrollLeft;
     const targetScrollLeft = this.getScrollLeft(nxtSlide);
     const diff = targetScrollLeft - curScrollLeft;
-    return animate(this, (tf, f) => {
-        this.scrollLeft = curScrollLeft + diff * tf;
-      });
+    return animate(this, (tf, _f) => {
+      this.scrollLeft = curScrollLeft + diff * tf;
+    });
   }
 
   touchSwipeListener(event) {
@@ -98,7 +99,7 @@ export class XSlides extends HTMLElement {
       }
     } else if (prevSlideNum >= aroundNumToBe) {
       const moves = prevSlideNum - aroundNumToBe; // 9 - 5 = 4
-      for (var i =0 ; i <= moves; i++) {
+      for (let i =0 ; i <= moves; i++) {
         this.insertBefore(this.firstElementChild, null);
       }
     }
