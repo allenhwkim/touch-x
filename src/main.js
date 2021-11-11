@@ -10,7 +10,8 @@ import './assets/x-drawer';
 defineAll();
 
 // use `$` instead of `document.querySelector`
-const $ = document.querySelector.bind(document);
+/* global $ */
+window.$ = document.querySelector.bind(document);
 
 (function(l) {
   if (l.search[1] === '/' ) {

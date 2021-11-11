@@ -1,4 +1,6 @@
+/* global module, require */
 const open = require('open');
+const esbuild = require('esbuild');
 const rimraf = require('rimraf').sync;
 const { minifyHtmlPlugin, minifyCssPlugin } = require('bojagi/esbuild-plugins');
 const { copy, injectEsbuildResult, runStaticServer, watchAndReload } = require('bojagi/post-builds');
@@ -57,7 +59,13 @@ config.lib = {
   minify: false,
   format: 'esm',
   target: ['es2019'],
-  sourcemap: false
+  sourcemap: false,
+  postBuilds: [
+    async function(_, result) {
+      let text = await esbuild.analyzeMetafile(result.metafile, {verbose: true});
+      console.log(text);
+    }
+  ]
 };
 
 module.exports = config;
