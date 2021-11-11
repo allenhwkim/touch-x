@@ -43,7 +43,7 @@
   "homepage": "https://github.com/elements-x/touch-x#readme",
   "devDependencies": {
     "body-scroll-lock": "^4.0.0-beta.0",
-    "bojagi": "^0.2.6",
+    "bojagi": "^0.2.7",
     "elements-x": "^2.1.10",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
