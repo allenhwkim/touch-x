@@ -10,9 +10,9 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "npm run lint && npm run build:lib && npm run build:docs",
-    "build:lib": "bojagi lib",
-    "build:docs": "bojagi build",
-    "start": "bojagi serve",
+    "build:lib": "esbuild-x lib",
+    "build:docs": "esbuild-x build",
+    "start": "esbuild-x serve",
     "lint": "eslint src lib --fix && git add ."
   },
   "publishConfig": {
@@ -43,8 +43,8 @@
   "homepage": "https://github.com/elements-x/touch-x#readme",
   "devDependencies": {
     "body-scroll-lock": "^4.0.0-beta.0",
-    "bojagi": "^0.2.7",
-    "elements-x": "^2.1.10",
+    "elements-x": "2.1.11",
+    "esbuild-x": "^0.3.0",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-unused-imports": "^2.0.0",

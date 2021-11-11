@@ -1,9 +1,9 @@
 /* global module, require */
 const open = require('open');
-const esbuild = require('esbuild');
+const esbuildX = require('esbuild-x');
 const rimraf = require('rimraf').sync;
-const { minifyHtmlPlugin, minifyCssPlugin } = require('bojagi/esbuild-plugins');
-const { copy, injectEsbuildResult, runStaticServer, watchAndReload } = require('bojagi/post-builds');
+const { minifyHtmlPlugin, minifyCssPlugin } = esbuildX.plugins;
+const { copy, injectEsbuildResult, runStaticServer, watchAndReload } = esbuildX.postBuilds;
 
 const config = {};
 
@@ -62,7 +62,7 @@ config.lib = {
   sourcemap: false,
   postBuilds: [
     async function(_, result) {
-      let text = await esbuild.analyzeMetafile(result.metafile, {verbose: true});
+      let text = await esbuildX.analyzeMetafile(result.metafile, {verbose: true});
       console.log(text);
     }
   ]
