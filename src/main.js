@@ -1,4 +1,4 @@
-import { defineAll } from "elements-x";
+import { defineAll } from 'elements-x';
 import '../lib'; // enables window.TouchX class
 
 import './assets/x-resizer';

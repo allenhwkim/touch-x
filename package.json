@@ -9,11 +9,11 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "npm run build:lib && npm run build:docs",
+    "build": "npm run lint && npm run build:lib && npm run build:docs",
     "build:lib": "bojagi lib",
     "build:docs": "bojagi build",
     "start": "bojagi serve",
-    "eslint": "eslint src lib --fix && git add"
+    "lint": "eslint src lib --fix && git add ."
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.com/"
