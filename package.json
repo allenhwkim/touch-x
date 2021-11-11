@@ -9,12 +9,10 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "rm -rf dist && npm run build:lib && npm run build:docs",
-    "build:lib": "webpack --config webpack.config.js --mode=production",
-    "build:docs": "webpack --config src/webpack.config.js --mode=production",
-    "start": "npm stop && webpack serve --config src/webpack.config.js --mode=development --open",
-    "stop": "kill-port 8080",
-    "test": "jest --coverage=true",
+    "build": "npm run build:lib && npm run build:docs",
+    "build:lib": "bojagi lib",
+    "build:docs": "bojagi build",
+    "start": "bojagi serve",
     "eslint": "eslint src lib --fix && git add"
   },
   "publishConfig": {
@@ -44,24 +42,14 @@
   },
   "homepage": "https://github.com/elements-x/touch-x#readme",
   "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
-    "babel-loader": "^8.2.2",
     "body-scroll-lock": "^4.0.0-beta.0",
-    "clean-webpack-plugin": "^4.0.0-alpha.0",
-    "copy-webpack-plugin": "^9.0.1",
-    "elements-x": "^1.14.1",
+    "bojagi": "^0.2.6",
+    "elements-x": "^2.1.10",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "genpage": "^0.2.0",
-    "html-webpack-plugin": "^5.3.2",
     "http-server": "^13.0.0",
-    "jest": "^27.0.6",
-    "kill-port": "^1.6.1",
-    "terser-webpack-plugin": "^5.1.4",
-    "webpack": "^5.50.0",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^3.11.2"
+    "open": "^8.4.0",
+    "rimraf": "^3.0.2"
   }
 }
