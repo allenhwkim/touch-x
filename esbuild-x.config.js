@@ -8,7 +8,7 @@ const { copy, injectEsbuildResult, runStaticServer, watchAndReload } = esbuildX.
 const config = {};
 
 /**
- * docs directory generation
+ * write github pages to docs folder
  */
 config.build = {
   entryPoints: ['./src/main.js'],
@@ -16,9 +16,7 @@ config.build = {
   plugins: [minifyCssPlugin, minifyHtmlPlugin],
   preBuilds: [ function clear() {rimraf('docs')} ], 
   postBuilds: [ 
-    copy('src/**/!(*.js) docs', {
-      replacements: [ {match: /index\.html/, find: /BUILD_DATE/, replace:  new Date()} ]
-    }),
+    copy('src/**/!(*.js) docs'),
     injectEsbuildResult(),
   ]
 };
@@ -31,23 +29,16 @@ config.serve = {
   loader: { '.html': 'text', '.css': 'text' },
   write: false,
   postBuilds: [
-    copy('src/**/!(*.js) dist', {
-      fs: require('memfs'), 
-      replacements: [ {match: /index\.html/, find: /BUILD_DATE/, replace:  new Date()} ]
-    }),
+    copy('src/**/!(*.js) dist'),
     injectEsbuildResult(),
-    runStaticServer('dist', {
-      fs: require('memfs'), 
-      port: 9100, 
-      notFound: {match: /\/[^\.]+$/, serve: 'index.html'} // not ending with an extension
-    }),
-    watchAndReload(['src', 'lib'], 9110),
+    runStaticServer('dist'),
+    watchAndReload(['src', 'lib']),
     _ => open('http://localhost:9100/')
   ]
 };
 
 /**
- * create dist directory
+ * write npm module to dist directory
  */
 config.lib = {
   entryPoints: ['lib/index.js'],

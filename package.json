@@ -44,7 +44,7 @@
   "devDependencies": {
     "body-scroll-lock": "^4.0.0-beta.0",
     "elements-x": "2.1.11",
-    "esbuild-x": "^0.3.2",
+    "esbuild-x": "^0.3.3",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-unused-imports": "^2.0.0",
